@@ -1,6 +1,7 @@
 
 package org.app.controler;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +15,12 @@ import org.app.model.entity.Account;
  * In MVC the Controler-Part
  */
 @RequestScoped
-public class AccountService {
+public class AccountService implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private AccountDAO accountDAO;

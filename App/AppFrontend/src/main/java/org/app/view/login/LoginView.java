@@ -38,10 +38,6 @@ public class LoginView extends VerticalLayout implements View {
 		addComponent(centeringLayout);
 	}
 
-	/**
-	 * Special case - Must be called by MainUI via Interface Translatable
-	 */
-
 	private Component buildLoginForm() {
 		FormLayout loginForm = new FormLayout();
 		loginForm.setSizeUndefined();
@@ -55,7 +51,8 @@ public class LoginView extends VerticalLayout implements View {
 			try {
 				JaasAccessControl.login(username.getValue(), password.getValue());
 				Page page = Page.getCurrent();
-				page.setLocation(page.getLocation()); 
+				page.reload();
+//				page.setLocation(page.getLocation()); 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -1,6 +1,8 @@
 
 package org.app.controler;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 
@@ -14,7 +16,9 @@ import org.app.model.entity.ElytronUser;
  * In MVC the Controler-Part
  */
 @RequestScoped
-public class ElytronUserService {
+public class ElytronUserService implements Serializable {
+
+ 	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private ElytronUserDAO elytronUserDAO;
