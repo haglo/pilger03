@@ -10,12 +10,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity()
-@NamedQueries({ @NamedQuery(name = ElytronRole.QUERY_GET_ALL, query = "SELECT r FROM ElytronRole r") })
+@NamedQueries({ 
+	@NamedQuery(name = ElytronRole.QUERY_FIND_ALL, query = "SELECT r FROM ElytronRole r"),
+	@NamedQuery(name = ElytronRole.QUERY_FIND_BY_ROLENAME, query = "SELECT c FROM ElytronRole c WHERE c.rolename =  :rolename")
+	
+	})
 public class ElytronRole implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String QUERY_GET_ALL = "ElytronRole.GetAll";
+	public static final String QUERY_FIND_ALL = "ElytronRole.FindAll";
+	public static final String QUERY_FIND_BY_ROLENAME = "ElytronRole.FindByUserName";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

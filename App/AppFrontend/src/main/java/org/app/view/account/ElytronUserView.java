@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 
+import org.app.controler.ElytronRoleService;
 import org.app.controler.ElytronUserService;
 import org.app.helper.I18n;
 import org.app.model.beans.ElytronRoleBean;
@@ -40,9 +42,9 @@ public class ElytronUserView extends HorizontalLayout implements View {
 
 	@Inject
 	ElytronUserService elytronUserService;
-
+	
 	@Inject
-	ElytronRoleBean elytronRole;
+	ElytronRoleService elytronRoleService;
 
 	private ElytronUser user;
 	private Set<ElytronUser> selectedUsers;
@@ -67,7 +69,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 		List<ElytronUser> puserList = elytronUserService.getElytronUserDAO().findAll();
 		puserList.sort(Comparator.comparing(ElytronUser::getUsername));
 
-		List<ElytronRole> roleList = elytronRole.findAll();
+		List<ElytronRole> roleList = elytronRoleService.getElytronRoleDAO().findAll();
 
 		DataProvider<ElytronUser, ?> dataProvider = DataProvider.ofCollection(puserList);
 		grid = new Grid<ElytronUser>();
