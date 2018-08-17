@@ -1,6 +1,9 @@
 package org.app.view.login;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.app.controler.jaas.AuthService;
 import org.app.helper.I18n;
 import com.vaadin.cdi.CDIView;
 import com.vaadin.cdi.UIScoped;
@@ -11,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -21,6 +25,9 @@ import com.vaadin.ui.themes.ValoTheme;
 @CDIView(I18n.LOGIN_VIEW)
 @UIScoped
 public class LoginView extends VerticalLayout implements View {
+	
+	@Inject 
+	AuthService authService;
 
 	private Button loginButton;
 	private VerticalLayout centeringLayout;
@@ -50,9 +57,9 @@ public class LoginView extends VerticalLayout implements View {
 		loginButton = new Button("Login", event -> {
 			try {
 				JaasAccessControl.login(username.getValue(), password.getValue());
+				Notification.show(authService.getMessageForAuthentication());
 				Page page = Page.getCurrent();
 				page.reload();
-//				page.setLocation(page.getLocation()); 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
