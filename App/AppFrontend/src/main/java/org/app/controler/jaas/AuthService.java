@@ -130,7 +130,6 @@ public class AuthService {
 		return MessageForAuthentication;
 	}
 	
-	
 
 //	public Account getAccount() {
 //		return account;
