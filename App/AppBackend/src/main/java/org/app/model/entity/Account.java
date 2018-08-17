@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries(
 		{ 	@NamedQuery(name = Account.QUERY_FIND_ALL, query = "SELECT c FROM Account c"),
-			@NamedQuery(name = Account.QUERY_FIND_BY_USERNAME, query = "SELECT c FROM Account c WHERE c.username =  :username_a") 
+			@NamedQuery(name = Account.QUERY_FIND_BY_USERNAME, query = "SELECT c FROM Account c WHERE c.username =  :username") 
 		})
 public class Account implements Serializable {
 

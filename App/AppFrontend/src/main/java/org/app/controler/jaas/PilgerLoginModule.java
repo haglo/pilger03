@@ -95,7 +95,7 @@ public class PilgerLoginModule implements LoginModule {
 
 		// don't ever do this in a real application!
 		
-		if (authService.validateAccount(loginFormUserName, loginFormPassword)) {
+		if (authService.validateAuthenticationValues(loginFormUserName, loginFormPassword)) {
 			succeeded = true;
 			((MainUI) UI.getCurrent()).loginSuccessful();
 			return succeeded;
@@ -104,7 +104,6 @@ public class PilgerLoginModule implements LoginModule {
 			Notification.show(authService.getMessageForAuthentication());
 			return succeeded;
 		}
-
 	}
 
 	@Override

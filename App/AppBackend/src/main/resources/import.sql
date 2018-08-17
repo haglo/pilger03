@@ -8,6 +8,7 @@ insert into pilgerdb.elytronrole (id, rolename) values (2,  'PowerUser');
 insert into pilgerdb.elytronrole (id, rolename) values (3,  'Administrator');
 insert into pilgerdb.elytronrole (id, rolename) values (4,  'Users');
 
+insert into pilgerdb.elytronuser (username, elytron_role_id, comment, defaultLanguage, defaultTheme ) values ('N-U-T', 3, 'New-User-Template', 'english', 'Default');
 insert into pilgerdb.elytronuser (username, elytron_role_id) values ('Admin1', 1);
 insert into pilgerdb.elytronuser (username, elytron_role_id) values ('Admin2', 2);
 
@@ -22,4 +23,5 @@ insert into pilgerdb.title (listprio, title) values (2, 'Dr.');
 insert into pilgerdb.title (listprio, title) values (3, 'Graf von');
 insert into pilgerdb.title (listprio, title) values (4, 'Freiherr von');
 
+insert into pilgerdb.settings(defaultLanguage, defaultTheme, defaultWindowWidth) values ('english', 'Default', '1200px');
 

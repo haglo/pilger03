@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.app.model.dao.AccountDAO;
+import org.app.model.dao.TitleDAO;
 import org.app.model.entity.Account;
 
 /*
@@ -64,6 +65,10 @@ public class AccountService implements Serializable{
 
 	public Account findByUserName(String username) {
 		return account = accountDAO.findByUserName(username);
+	}
+
+	public AccountDAO getAccountDAO() {
+		return accountDAO;
 	}
 
 

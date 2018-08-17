@@ -15,6 +15,7 @@ import org.app.controler.ElytronUserService;
 import org.app.helper.I18n;
 import org.app.model.beans.ElytronRoleBean;
 import org.app.model.entity.ElytronUser;
+import org.app.model.entity.Title;
 import org.app.model.entity.enums.DefaultLanguage;
 import org.app.model.entity.enums.DefaultTheme;
 import org.app.model.entity.ElytronRole;
@@ -31,6 +32,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.TextRenderer;
@@ -62,16 +64,17 @@ public class ElytronUserView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 		setSizeFull();
-		setWidth("1000px");
+		setWidth("1200px");
 
 		VerticalLayout content = new VerticalLayout();
 		selectedUsers = new HashSet<>();
-		List<ElytronUser> puserList = elytronUserService.getElytronUserDAO().findAll();
-		puserList.sort(Comparator.comparing(ElytronUser::getUsername));
+		List<ElytronUser> elytronUserList = elytronUserService.getElytronUserDAO().findAll();
+		elytronUserList.sort(Comparator.comparing(ElytronUser::getId));
 
-		List<ElytronRole> roleList = elytronRoleService.getElytronRoleDAO().findAll();
+		List<ElytronRole> elytronRoleList = elytronRoleService.getElytronRoleDAO().findAll();
 
-		DataProvider<ElytronUser, ?> dataProvider = DataProvider.ofCollection(puserList);
+		DataProvider<ElytronUser, ?> dataProvider = DataProvider.ofCollection(elytronUserList);
+
 		grid = new Grid<ElytronUser>();
 		grid.setSizeFull();
 		grid.setSelectionMode(SelectionMode.MULTI);
@@ -87,7 +90,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 
 		cbxRole.setPageLength(8);
 		cbxRole.setEmptySelectionAllowed(false);
-		cbxRole.setItems(roleList);
+		cbxRole.setItems(elytronRoleList);
 		cbxRole.setItemCaptionGenerator(ElytronRole::getRolename);
 
 		cbxLanguage.setPageLength(8);
@@ -101,9 +104,9 @@ public class ElytronUserView extends HorizontalLayout implements View {
 		grid.setDataProvider(dataProvider);
 		grid.addColumn(ElytronUser::getUsername).setCaption("Benutzername")
 				.setEditorComponent(txfRolename, ElytronUser::setUsername).setId("Benutzername");
-		grid.addColumn(ElytronUser::getRolename).setCaption("Rolle")
+		grid.addColumn(ElytronUser::getElytronRole).setCaption("Rolle")
 				.setRenderer(role -> role != null ? role.getRolename() : null, new TextRenderer())
-				.setEditorComponent(cbxRole, ElytronUser::setRolename);
+				.setEditorComponent(cbxRole, ElytronUser::setElytronRole);
 		grid.addColumn(ElytronUser::getDefaultLanguage).setCaption("Sprache").setEditorComponent(cbxLanguage,
 				ElytronUser::setDefaultLanguage);
 		grid.addColumn(ElytronUser::getDefaultTheme).setCaption("Design").setEditorComponent(cbxTheme,
@@ -127,6 +130,10 @@ public class ElytronUserView extends HorizontalLayout implements View {
 			return;
 		}
 		for (ElytronUser entry : selectedUsers) {
+			if (entry.getId()==1) {
+				Notification.show("Can not delete User NUT - New User Template");
+				continue;
+			}
 			elytronUserService.getElytronUserDAO().remove(entry.getId());
 		}
 		refreshGrid();

@@ -56,10 +56,12 @@ public class LoginView extends VerticalLayout implements View {
 
 		loginButton = new Button("Login", event -> {
 			try {
-				JaasAccessControl.login(username.getValue(), password.getValue());
-				Notification.show(authService.getMessageForAuthentication());
-				Page page = Page.getCurrent();
-				page.reload();
+				if (preAuthentication(username.getValue(), password.getValue())) {
+					JaasAccessControl.login(username.getValue(), password.getValue());
+					Notification.show(authService.getMessageForAuthentication());
+					Page page = Page.getCurrent();
+					page.reload();					
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -73,6 +75,10 @@ public class LoginView extends VerticalLayout implements View {
 		loginForm.addComponent(loginButton);
 
 		return loginForm;
+	}
+	
+	private boolean preAuthentication(String username, String password) {
+		return authService.validateAuthenticationValues(username, password);
 	}
 
 }

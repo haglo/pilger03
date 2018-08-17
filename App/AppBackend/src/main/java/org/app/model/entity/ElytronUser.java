@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +31,14 @@ public class ElytronUser extends Superclass implements Serializable {
 
 	@Column(unique = true, length = 45)
 	private String username;
-
+	
 	/**
 	 * Einbinden: Entity Role über ComboBox
 	 */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ELYTRON_ROLE_ID")
-	private ElytronRole rolename;
+	private ElytronRole elytronRole;
 	
 	/**
 	 * Einbinden: Enum Language über ComboBox
@@ -50,14 +52,6 @@ public class ElytronUser extends Superclass implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private DefaultTheme defaultTheme;
 
-//	public int getId() {
-//		return id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -66,12 +60,12 @@ public class ElytronUser extends Superclass implements Serializable {
 		this.username = username;
 	}
 
-	public ElytronRole getRolename() {
-		return rolename;
+	public ElytronRole getElytronRole() {
+		return elytronRole;
 	}
 
-	public void setRolename(ElytronRole rolename) {
-		this.rolename = rolename;
+	public void setElytronRole(ElytronRole elytronRole) {
+		this.elytronRole = elytronRole;
 	}
 
 	public DefaultLanguage getDefaultLanguage() {

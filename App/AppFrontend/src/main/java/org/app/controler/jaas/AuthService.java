@@ -1,5 +1,7 @@
 package org.app.controler.jaas;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -12,6 +14,8 @@ import org.app.controler.SessionService;
 import org.app.model.dao.ElytronRoleDAO;
 import org.app.model.entity.Account;
 import org.app.model.entity.ElytronUser;
+
+import com.vaadin.ui.Notification;
 
 @RequestScoped
 public class AuthService {
@@ -80,18 +84,52 @@ public class AuthService {
 //		return result;
 //	}
 
+//		boolean result = false;
+//		elytronUser = new ElytronUser();
+//
+//		try {
+//			elytronUser = elytronUserService.getElytronUserDAO().findByName(username);
+//			sessionService.setCurrentUser(elytronUser);
+//			result = true;
+//
+//		} catch (NoResultException nre) {
+//			try {
+//				elytronUser = new ElytronUser();
+//				elytronUser.setUsername(username);
+//				elytronUser.setRolename(elytronRoleDAO.findByID(1));
+//				elytronUserService.getElytronUserDAO().create(elytronUser);
+//				sessionService.setCurrentUser(elytronUser);
+//				result = true;
+//			} catch (Exception ex) {
+//				ex.printStackTrace();
+//				result = false;
+//			}
+//		}
+//
+//		return result;
+//	}
+
 		boolean result = false;
+		boolean elytronUserExists = false;
 		elytronUser = new ElytronUser();
 
-		try {
-			elytronUser = elytronUserService.getElytronUserDAO().findByName(username);
+		List<ElytronUser> elytronUserList = elytronUserService.getElytronUserDAO().findAll();
+		for (ElytronUser entry : elytronUserList) {
+			if (entry.getUsername().equals(username)) {
+				elytronUserExists = true;
+			}
+		}
+
+		if (elytronUserExists) {
 			sessionService.setCurrentUser(elytronUser);
 			result = true;
+		}
 
-		} catch (NoResultException nre) {
+		if (!elytronUserExists) {
 			try {
+				elytronUser = new ElytronUser();
 				elytronUser.setUsername(username);
-				elytronUser.setRolename(elytronRoleDAO.findByID(1));
+				elytronUser.setElytronRole(elytronRoleDAO.findByID(1));
 				elytronUserService.getElytronUserDAO().create(elytronUser);
 				sessionService.setCurrentUser(elytronUser);
 				result = true;
@@ -100,11 +138,10 @@ public class AuthService {
 				result = false;
 			}
 		}
-
 		return result;
 	}
 
-	public boolean validateAccount(String username, String password) {
+	public boolean validateAuthenticationValues(String username, String password) {
 		boolean validUser = false;
 		boolean validPassword = false;
 		boolean validElytronUser = false;
@@ -129,7 +166,6 @@ public class AuthService {
 	public String getMessageForAuthentication() {
 		return MessageForAuthentication;
 	}
-	
 
 //	public Account getAccount() {
 //		return account;
