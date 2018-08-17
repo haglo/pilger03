@@ -5,17 +5,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.NoResultException;
-
 import org.app.controler.AccountService;
 import org.app.controler.ElytronUserService;
 import org.app.controler.SessionService;
 import org.app.model.dao.ElytronRoleDAO;
 import org.app.model.entity.Account;
 import org.app.model.entity.ElytronUser;
-
-import com.vaadin.ui.Notification;
 
 @RequestScoped
 public class AuthService {

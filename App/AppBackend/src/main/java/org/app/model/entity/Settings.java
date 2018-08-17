@@ -16,7 +16,6 @@ import org.app.model.entity.enums.DefaultLanguage;
 import org.app.model.entity.enums.DefaultTheme;
 
 @Entity
-@Table(name = "SETTINGS")
 @NamedQueries({ @NamedQuery(name = Settings.QUERY_FIND_ALL, query = "SELECT c FROM Settings c") })
 public class Settings implements Serializable {
 

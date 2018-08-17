@@ -13,9 +13,10 @@ import org.app.model.dao.PersonDAO;
  * Repräsentiert den kpmpletten Lebenszyklus eines Personendatensatz &
  * Bietet zusätzliche Funktionalität für diesen Personendatensatz an
  */
-@SuppressWarnings("serial")
 @RequestScoped
 public class PersonService implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private PersonDAO personDAO;

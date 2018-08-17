@@ -18,9 +18,6 @@ import org.app.model.entity.Account;
 @RequestScoped
 public class AccountService implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -70,6 +67,5 @@ public class AccountService implements Serializable{
 	public AccountDAO getAccountDAO() {
 		return accountDAO;
 	}
-
 
 }

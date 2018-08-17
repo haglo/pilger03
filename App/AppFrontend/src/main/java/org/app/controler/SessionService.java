@@ -17,14 +17,14 @@ import org.app.model.entity.ElytronUser;
 @SessionScoped
 public class SessionService implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Inject
 	SettingsService settingsService;
-	
+
 	@Inject
 	LoggedInUser loggedInUser;
-	
-	private static final long serialVersionUID = 1L;
-	
+
 	private ElytronUser currentUser = new ElytronUser();
 	private Locale currentLocale;
 	private String currentTheme;
