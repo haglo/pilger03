@@ -60,54 +60,6 @@ public class AuthService {
 	}
 
 	private boolean validateElytronUser(String username) {
-//		boolean result = false;
-//		elytronUser = new ElytronUser();
-//
-//		if (elytronUserService.getElytronUserDAO().findByName(username) != null) {
-//			elytronUser = elytronUserService.getElytronUserDAO().findByName(username);
-//			sessionService.setCurrentUser(elytronUser);
-//			result = true;
-//		}
-//
-//		if (elytronUserService.getElytronUserDAO().findByName(username) == null) {
-//			try {
-//				elytronUser.setUsername(username);
-//				elytronUser.setRolename(elytronRoleDAO.findByID(1));
-//				elytronUserService.getElytronUserDAO().create(elytronUser);
-//				sessionService.setCurrentUser(elytronUser);
-//				result = true;
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//				result = false;
-//			}
-//		}
-//		return result;
-//	}
-
-//		boolean result = false;
-//		elytronUser = new ElytronUser();
-//
-//		try {
-//			elytronUser = elytronUserService.getElytronUserDAO().findByName(username);
-//			sessionService.setCurrentUser(elytronUser);
-//			result = true;
-//
-//		} catch (NoResultException nre) {
-//			try {
-//				elytronUser = new ElytronUser();
-//				elytronUser.setUsername(username);
-//				elytronUser.setRolename(elytronRoleDAO.findByID(1));
-//				elytronUserService.getElytronUserDAO().create(elytronUser);
-//				sessionService.setCurrentUser(elytronUser);
-//				result = true;
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//				result = false;
-//			}
-//		}
-//
-//		return result;
-//	}
 
 		boolean result = false;
 		boolean elytronUserExists = false;
@@ -127,9 +79,14 @@ public class AuthService {
 
 		if (!elytronUserExists) {
 			try {
-				elytronUser = new ElytronUser();
+				ElytronUser nutElytronUser = new ElytronUser();
+				nutElytronUser = elytronUserService.getElytronUserDAO().findByID(1);
+
 				elytronUser.setUsername(username);
-				elytronUser.setElytronRole(elytronRoleDAO.findByID(1));
+				elytronUser.setElytronRole(nutElytronUser.getElytronRole());
+				elytronUser.setDefaultLanguage(nutElytronUser.getDefaultLanguage());
+				elytronUser.setDefaultTheme(nutElytronUser.getDefaultTheme());
+
 				elytronUserService.getElytronUserDAO().create(elytronUser);
 				sessionService.setCurrentUser(elytronUser);
 				result = true;
