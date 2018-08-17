@@ -129,6 +129,8 @@ public class AuthService {
 	public String getMessageForAuthentication() {
 		return MessageForAuthentication;
 	}
+	
+	
 
 //	public Account getAccount() {
 //		return account;
