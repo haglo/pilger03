@@ -44,18 +44,14 @@ public class PersonView extends VerticalLayout implements View {
 	private Person selectedPerson;
 	private Person newPerson;
 	private Set<Person> selectedPersons;
-
 	private SaveModus saveModus;
 	private TextField txfFirstName = new TextField();
 	private TextField txfLastName = new TextField();
 	private TextField txfComment = new TextField();
-
 	private VerticalLayout mainContent;
 	private VerticalLayout personContent;
 	private Grid<Person> personGrid;
-	private HorizontalLayout personNavBar;
 	private HorizontalLayout addressCommunicationContent;
-
 	private AddressView addressView;
 	private CommunicationView communicationView;
 
@@ -69,10 +65,9 @@ public class PersonView extends VerticalLayout implements View {
 	@PostConstruct
 	void init() {
 		mainContent = new VerticalLayout();
-		
+
 		personContent = new VerticalLayout();
 		personGrid = new Grid<Person>();
-		personNavBar = new HorizontalLayout();
 		addressCommunicationContent = new HorizontalLayout();
 
 		saveModus = SaveModus.UPDATE;

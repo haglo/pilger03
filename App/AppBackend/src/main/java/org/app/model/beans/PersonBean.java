@@ -23,7 +23,7 @@ import org.hibernate.envers.query.AuditEntity;
 
 @Stateless
 @Remote(PersonDAO.class)
-@DeclareRoles(value = { "System", "PowerUser", "Administrator", "Users"})
+//@DeclareRoles(value = { "System", "PowerUser", "Administrator", "Users"})
 //@SecurityDomain(value="SecurityPilger")
 public class PersonBean implements PersonDAO {
 
@@ -35,7 +35,7 @@ public class PersonBean implements PersonDAO {
 
 	@Override
 //	@RolesAllowed(value = { "PowerUser" })
-	@PermitAll
+//	@PermitAll
 	public Person create(Person person) {
 		em.persist(person);
 		em.flush();
@@ -44,7 +44,7 @@ public class PersonBean implements PersonDAO {
 
 	@Override
 //	@RolesAllowed(value = { "PowerUser" })
-	@PermitAll
+//	@PermitAll
 	public Person update(Person person) {
 
 		try {
@@ -68,7 +68,7 @@ public class PersonBean implements PersonDAO {
 	}
 
 	@Override
-	@PermitAll
+//	@PermitAll
 	public List<Person> findAll() {
 		return em.createNamedQuery(Person.QUERY_GET_ALL, Person.class).getResultList();
 	}

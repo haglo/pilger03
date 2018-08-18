@@ -8,6 +8,8 @@ import org.app.controler.SessionService;
 import org.app.helper.I18n;
 import org.app.view.help.HelpView;
 import org.app.view.login.LoginView;
+import org.app.view.person.PersonView;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.cdi.CDIViewProvider;
@@ -26,9 +28,6 @@ import com.vaadin.ui.VerticalLayout;
 public class MainUI extends UI {
 	@Inject
 	CDIViewProvider viewProvider;
-
-	@Inject
-	HelpView helpView;
 
 	@Inject
 	LoginView loginView;
@@ -87,7 +86,7 @@ public class MainUI extends UI {
 		navigator.setErrorView(loginView);
 
 		String initialState = Optional.ofNullable(navigator.getState()).filter(state -> !state.trim().isEmpty())
-				.orElse(I18n.HELP_VIEW);
+				.orElse(I18n.PERSON_VIEW);
 		navigator.navigateTo(initialState);
 	}
 
