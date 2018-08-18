@@ -35,7 +35,6 @@ public class ElytronUser extends Superclass implements Serializable {
 	 * Einbinden: Entity Role über ComboBox
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-//	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ELYTRON_ROLE_ID")
 	private ElytronRole elytronRole;
 

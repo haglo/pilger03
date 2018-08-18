@@ -27,6 +27,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
@@ -48,7 +49,7 @@ public class PersonView extends VerticalLayout implements View {
 	private TextField txfFirstName = new TextField();
 	private TextField txfLastName = new TextField();
 	private TextField txfComment = new TextField();
-	private VerticalLayout mainContent;
+	private VerticalSplitPanel mainContent;
 	private VerticalLayout personContent;
 	private Grid<Person> personGrid;
 	private HorizontalLayout addressCommunicationContent;
@@ -64,22 +65,25 @@ public class PersonView extends VerticalLayout implements View {
 
 	@PostConstruct
 	void init() {
-		mainContent = new VerticalLayout();
+		
+		mainContent = new VerticalSplitPanel();
+		mainContent.setSplitPosition(50, Unit.PERCENTAGE);
+		mainContent.setSizeFull();
 
 		personContent = new VerticalLayout();
-		personGrid = new Grid<Person>();
+		personContent.setWidth("100%");
 		addressCommunicationContent = new HorizontalLayout();
-
+		addressCommunicationContent.setWidth("100%");
+		
 		saveModus = SaveModus.UPDATE;
 		selectedPersons = new HashSet<Person>();
 		selectedPerson = new Person();
 		newPerson = new Person();
 
+		personGrid = new Grid<Person>();
 		personGrid.setWidth("100%");
-		mainContent.setMargin(false);
 		personContent.setMargin(false);
 
-		addressCommunicationContent.setWidth("100%");
 		List<Person> personList = personService.getPersonDAO().findAll();
 		personList.sort(Comparator.comparing(Person::getLastName));
 
@@ -161,12 +165,8 @@ public class PersonView extends VerticalLayout implements View {
 		personContent.addComponent(personGrid);
 		personContent.addComponent(personNavBar);
 
-		mainContent.addComponent(personContent);
-		mainContent.addComponent(addressCommunicationContent);
-
-		mainContent.setExpandRatio(personContent, 0.7f);
-		mainContent.setExpandRatio(addressCommunicationContent, 0.3f);
-
+		mainContent.setFirstComponent(personContent);
+		mainContent.setSecondComponent(addressCommunicationContent);
 		addComponent(mainContent);
 	}
 
