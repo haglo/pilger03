@@ -11,14 +11,12 @@ import javax.inject.Inject;
 import org.app.controler.AccountService;
 import org.app.controler.PersonService;
 import org.app.helper.I18n;
-import org.app.model.audit.CustomRevisionListener;
-import org.app.model.audit.LoggedInUser;
-import org.app.model.beans.ElytronUserBean;
 import org.app.model.entity.Person;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -26,6 +24,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,12 +33,14 @@ import com.vaadin.ui.themes.ValoTheme;
 @CDIView(I18n.PERSON_VIEW)
 @UIScoped
 public class PersonView extends VerticalLayout implements View {
-	
 
 	@Inject
 	PersonService personService;
 
+	@Inject
+	AccountService accountService;
 
+	private I18n i18n;
 	private Person selectedPerson;
 	private Person newPerson;
 	private Set<Person> selectedPersons;
@@ -49,16 +50,20 @@ public class PersonView extends VerticalLayout implements View {
 	private TextField txfLastName = new TextField();
 	private TextField txfComment = new TextField();
 
-
 	private VerticalLayout mainContent;
 	private VerticalLayout personContent;
 	private Grid<Person> personGrid;
-	private CssLayout personNavBar;
+	private HorizontalLayout personNavBar;
 	private HorizontalLayout addressCommunicationContent;
 
+	private AddressView addressView;
+	private CommunicationView communicationView;
+
 	public PersonView() {
+		i18n = new I18n();
 		setSizeFull();
 		setMargin(new MarginInfo(false, true, true, true));
+		setWidth("1200px");
 	}
 
 	@PostConstruct
@@ -67,8 +72,7 @@ public class PersonView extends VerticalLayout implements View {
 		
 		personContent = new VerticalLayout();
 		personGrid = new Grid<Person>();
-		personNavBar = new CssLayout();
-		personNavBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+		personNavBar = new HorizontalLayout();
 		addressCommunicationContent = new HorizontalLayout();
 
 		saveModus = SaveModus.UPDATE;
@@ -79,8 +83,8 @@ public class PersonView extends VerticalLayout implements View {
 		personGrid.setWidth("100%");
 		mainContent.setMargin(false);
 		personContent.setMargin(false);
-		addressCommunicationContent.setWidth("100%");
 
+		addressCommunicationContent.setWidth("100%");
 		List<Person> personList = personService.getPersonDAO().findAll();
 		personList.sort(Comparator.comparing(Person::getLastName));
 
@@ -88,31 +92,31 @@ public class PersonView extends VerticalLayout implements View {
 		personGrid.setSelectionMode(SelectionMode.MULTI);
 
 		personGrid.addSelectionListener(event -> {
-			saveModus = SaveModus.UPDATE;
 			selectedPerson = new Person();
 			selectedPersons = new HashSet<Person>();
 			selectedPersons = event.getAllSelectedItems();
-			if (selectedPersons.size() != 1) {
+			if (selectedPersons.size() == 0) {
+				addressCommunicationContent.removeComponent(addressView);
+				addressCommunicationContent.removeComponent(communicationView);
 				mainContent.removeComponent(addressCommunicationContent);
 			} else {
+				selectedPerson = getTheSelectedPerson(selectedPersons);
 				if (selectedPerson != null) {
+					showAddresses(selectedPerson);
+					showCommunication(selectedPerson);
 					mainContent.addComponent(addressCommunicationContent);
-				} else  {
-					saveModus = SaveModus.NEW;
 				}
 			}
 		});
 
 		personGrid.getEditor().setEnabled(true);
-
 		personGrid.getEditor().addSaveListener(event -> {
 			selectedPerson = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
+				selectedPerson = new Person();
 				updateRow(selectedPerson);
 			} else {
 				newPerson = new Person();
-				newPerson.setFirstName(txfFirstName.getValue());
-				newPerson.setLastName(txfLastName.getValue());
 				createPerson(newPerson);
 			}
 		});
@@ -131,12 +135,12 @@ public class PersonView extends VerticalLayout implements View {
 
 		personGrid.setDataProvider(dataProvider);
 
-		personGrid.addColumn(Person::getFirstName).setCaption("Vorname").setEditorComponent(txfFirstName,
-				Person::setFirstName).setId("Vorname");
-		personGrid.addColumn(Person::getLastName).setCaption("Nachname").setEditorComponent(txfLastName,
-				Person::setLastName).setId("Nachname");
-		personGrid.addColumn(Person::getComment).setCaption("Kommentar").setEditorComponent(txfComment,
-				Person::setComment).setId("Kommentar");
+		personGrid.addColumn(Person::getFirstName).setCaption(i18n.PERSON_SURNAME).setEditorComponent(txfFirstName,
+				Person::setFirstName);
+		personGrid.addColumn(Person::getLastName).setCaption(i18n.PERSON_LASTNAME).setEditorComponent(txfLastName,
+				Person::setLastName);
+		personGrid.addColumn(Person::getComment).setCaption(i18n.BASIC_COMMENT).setEditorComponent(txfComment,
+				Person::setComment);
 
 		Button add = new Button("+");
 		add.addClickListener(event -> {
@@ -147,7 +151,17 @@ public class PersonView extends VerticalLayout implements View {
 		Button delete = new Button("-");
 		delete.addClickListener(event -> deleteRow(selectedPersons));
 
-		personNavBar.addComponents(add, delete);
+		Button detail = new Button("", ev -> {
+			if (getTheSelectedPerson(selectedPersons) != null) {
+				getUI().addWindow(new PersonDetailView(this, getTheSelectedPerson(selectedPersons)));
+			}
+			refreshGrid();
+
+		});
+		detail.setIcon(VaadinIcons.PENCIL);
+
+		CssLayout personNavBar = new CssLayout(add, delete, detail);
+		personNavBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
 		personContent.addComponent(personGrid);
 		personContent.addComponent(personNavBar);
@@ -161,6 +175,52 @@ public class PersonView extends VerticalLayout implements View {
 		addComponent(mainContent);
 	}
 
+	private void showAddresses(Person selectedPerson) {
+
+		try {
+			if (addressView.isAttached()) {
+				removeComponent(addressView);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		addressView = new AddressView(personService.getPersonDAO(), selectedPerson);
+		addressCommunicationContent.addComponent(addressView);
+	}
+
+	private void showCommunication(Person selectedPerson) {
+
+		try {
+			if (communicationView.isAttached()) {
+				removeComponent(addressView);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		communicationView = new CommunicationView(personService.getPersonDAO(), selectedPerson);
+		addressCommunicationContent.addComponent(communicationView);
+	}
+
+	private Person getTheSelectedPerson(Set<Person> selectedPersons) {
+		selectedPerson = new Person();
+		if (selectedPersons.size() > 1) {
+			Notification.show(i18n.NOTIFICATION_ONLY_ONE_ITEM);
+			return null;
+		}
+		if (selectedPersons.size() < 1) {
+			Notification.show(i18n.NOTIFICATION_EXACT_ONE_ITEM);
+			return null;
+		}
+		if (selectedPersons.size() == 1) {
+			for (Person person : selectedPersons) {
+				selectedPerson = person;
+			}
+		}
+		return selectedPerson;
+
+	}
 
 	private void addRow() {
 		List<Person> list = personService.getPersonDAO().findAll();
@@ -168,15 +228,19 @@ public class PersonView extends VerticalLayout implements View {
 
 		newPerson.setFirstName("");
 		newPerson.setLastName("");
+		newPerson.setComment("");
 		list.add(newPerson);
 		personGrid.setItems(list);
 
 		personGrid.getEditor().editRow(list.size() - 1);
 		txfFirstName.focus();
+
+		createPerson(newPerson);
 	}
 
 	private void deleteRow(Set<Person> selectedPersons) {
 		if (selectedPersons.size() == 0) {
+			Notification.show(i18n.NOTIFICATION_NO_ITEM);
 			return;
 		}
 		for (Person person : selectedPersons) {
@@ -193,8 +257,7 @@ public class PersonView extends VerticalLayout implements View {
 	public void createPerson(Person person) {
 
 		try {
-			personService.getPersonDAO().update(person);
-			
+			personService.getPersonDAO().create(person);
 			refreshGrid();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -227,6 +290,10 @@ public class PersonView extends VerticalLayout implements View {
 
 	public PersonService getPersonService() {
 		return personService;
+	}
+
+	public AccountService getAccountService() {
+		return accountService;
 	}
 
 }

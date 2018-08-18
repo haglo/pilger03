@@ -1,10 +1,15 @@
 package org.app.model.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 import org.hibernate.envers.Audited;
 
@@ -35,6 +40,27 @@ public class Person extends Superclass implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Set<Address> addresses = new HashSet<Address>();
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public void addAddress(Address address) {
+		addresses.add(address);
+		address.setPerson(this);
+	}
+
+	public void removeAddress(Address address) {
+		addresses.remove(address);
+		address.setPerson(null);
 	}
 
 }
