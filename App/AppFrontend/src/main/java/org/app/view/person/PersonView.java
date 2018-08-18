@@ -103,7 +103,7 @@ public class PersonView extends VerticalLayout implements View {
 				if (selectedPerson != null) {
 					showAddresses(selectedPerson);
 					showCommunication(selectedPerson);
-					mainContent.addComponent(addressCommunicationContent);
+					mainContent.setSecondComponent(addressCommunicationContent);
 				}
 			}
 		});
@@ -112,11 +112,9 @@ public class PersonView extends VerticalLayout implements View {
 		personGrid.getEditor().addSaveListener(event -> {
 			selectedPerson = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
-				selectedPerson = new Person();
 				updateRow(selectedPerson);
 			} else {
-				newPerson = new Person();
-				createPerson(newPerson);
+				createPerson(selectedPerson);
 			}
 		});
 
@@ -173,8 +171,8 @@ public class PersonView extends VerticalLayout implements View {
 	private void showAddresses(Person selectedPerson) {
 
 		try {
-			if (addressView.isAttached()) {
-				removeComponent(addressView);
+			if (addressCommunicationContent.isAttached()) {
+				removeComponent(addressCommunicationContent);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

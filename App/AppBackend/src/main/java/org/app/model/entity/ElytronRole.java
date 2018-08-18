@@ -10,31 +10,18 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity()
-@NamedQueries({ 
-	@NamedQuery(name = ElytronRole.QUERY_FIND_ALL, query = "SELECT r FROM ElytronRole r"),
-	@NamedQuery(name = ElytronRole.QUERY_FIND_BY_ROLENAME, query = "SELECT c FROM ElytronRole c WHERE c.rolename =  :rolename")
-	
-	})
-public class ElytronRole implements Serializable {
+@NamedQueries({ @NamedQuery(name = ElytronRole.QUERY_FIND_ALL, query = "SELECT r FROM ElytronRole r"),
+		@NamedQuery(name = ElytronRole.QUERY_FIND_BY_ROLENAME, query = "SELECT c FROM ElytronRole c WHERE c.rolename =  :rolename")
+
+})
+public class ElytronRole extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_FIND_ALL = "ElytronRole.FindAll";
 	public static final String QUERY_FIND_BY_ROLENAME = "ElytronRole.FindByUserName";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
 	private String rolename;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getRolename() {
 		return rolename;
@@ -43,7 +30,5 @@ public class ElytronRole implements Serializable {
 	public void setRolename(String rolename) {
 		this.rolename = rolename;
 	}
-
-
 
 }

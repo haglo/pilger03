@@ -75,4 +75,13 @@ public class Person extends Superclass implements Serializable {
 		this.communications = communications;
 	}
 
+	public void addCommunication(Communication communication) {
+		communications.add(communication);
+		communication.setPerson(this);
+	}
+
+	public void removeCommunication(Communication communication) {
+		communications.remove(communication);
+		communication.setPerson(null);
+	}
 }

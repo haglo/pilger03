@@ -145,7 +145,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 	}
 
 	public void refreshGrid() {
-		List<ElytronUser> list = elytronUserService.getElytronUserDAO().findAll();
+		List<ElytronUser> list = elytronUserService.getElytronUserDAO().findAllExpanded();
 		grid.sort("Benutzername", SortDirection.ASCENDING);
 		grid.setItems(list);
 	}
