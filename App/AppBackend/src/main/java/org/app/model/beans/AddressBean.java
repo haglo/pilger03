@@ -42,7 +42,7 @@ public class AddressBean implements AddressDAO {
 
 	@Override
 	public List<Address> findAll() {
-		return em.createNamedQuery(Address.QUERY_GET_ALL, Address.class).getResultList();
+		return em.createNamedQuery(Address.QUERY_FIND_ALL, Address.class).getResultList();
 	}
 
 }

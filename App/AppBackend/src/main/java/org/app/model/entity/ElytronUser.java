@@ -17,13 +17,15 @@ import org.app.model.entity.enums.DefaultTheme;
 @Entity
 @NamedQueries({ 
 		@NamedQuery(name = ElytronUser.QUERY_FIND_ALL, query = "SELECT c FROM ElytronUser c"),
-		@NamedQuery(name = ElytronUser.QUERY_FIND_BY_USERNAME, query = "SELECT c FROM ElytronUser c WHERE c.username =  :username") 
+		@NamedQuery(name = ElytronUser.QUERY_FIND_ALL_EXPANDED, query = "SELECT c FROM ElytronUser c join fetch c.elytronRole"),
+		@NamedQuery(name = ElytronUser.QUERY_FIND_BY_USERNAME, query = "SELECT c FROM ElytronUser c WHERE c.username =  :username")
 		})
 public class ElytronUser extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_FIND_ALL = "ElytronUser.FindAll";
+	public static final String QUERY_FIND_ALL_EXPANDED = "ElytronUser.FindAllExpanded";
 	public static final String QUERY_FIND_BY_USERNAME = "ElytronUser.FindByUserName";
 
 	@Column(unique = true)

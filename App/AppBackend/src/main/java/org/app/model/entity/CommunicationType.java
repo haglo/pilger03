@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
+
 @Entity
 @NamedQuery(name = CommunicationType.QUERY_GET_ALL, query = "SELECT c FROM CommunicationType c")
 public class CommunicationType extends Superclass implements Serializable {

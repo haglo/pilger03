@@ -17,7 +17,7 @@ public final class I18n {
 	public static final String ELYTRON_USER_VIEW = "ElytronUserView";
 	public static final String THEME = "Theme";
 	public static final String LOCALE = "Locale";
-	
+
 	public static String MIN_WIDTH;
 
 	public String BASIC_EDIT = i18m.getMessage("basic.edit");
@@ -30,6 +30,10 @@ public final class I18n {
 	public String BASIC_MODIFY_BY = i18m.getMessage("basic.modifyby");
 	public String BASIC_MODIFY_AT = i18m.getMessage("basic.modifyat");
 	public String BASIC_EMAIL = i18m.getMessage("basic.email");
+	public String BASIC_PHONE = i18m.getMessage("basic.phone");
+	public String BASIC_MOBILE = i18m.getMessage("basic.mobile");
+	public String BASIC_FAX = i18m.getMessage("basic.fax");
+	public String BASIC_WEBSITE = i18m.getMessage("basic.website");
 
 	public String AUTH_LOGIN = i18m.getMessage("auth.login");
 	public String AUTH_REMEMBER_ME = i18m.getMessage("auth.rememberme");
@@ -48,6 +52,7 @@ public final class I18n {
 	public String PERSON_ZIPCODE = i18m.getMessage("person.zipcode");
 	public String PERSON_CITY = i18m.getMessage("person.city");
 	public String PERSON_COUNTRY = i18m.getMessage("person.country");
+	public String PERSON_COMMUNICATION = i18m.getMessage("person.communication");
 
 	public String TITLE_WINDOW_DETAIL_CAPTION = i18m.getMessage("title.windowdetailcaption");
 	public String TITLE_WINDOW_NEW_CAPTION = i18m.getMessage("title.windownewcaption");

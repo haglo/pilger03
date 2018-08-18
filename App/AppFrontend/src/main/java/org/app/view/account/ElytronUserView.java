@@ -68,7 +68,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 
 		VerticalLayout content = new VerticalLayout();
 		selectedUsers = new HashSet<>();
-		List<ElytronUser> elytronUserList = elytronUserService.getElytronUserDAO().findAll();
+		List<ElytronUser> elytronUserList = elytronUserService.getElytronUserDAO().findAllExpanded();
 		elytronUserList.sort(Comparator.comparing(ElytronUser::getId));
 
 		List<ElytronRole> elytronRoleList = elytronRoleService.getElytronRoleDAO().findAll();

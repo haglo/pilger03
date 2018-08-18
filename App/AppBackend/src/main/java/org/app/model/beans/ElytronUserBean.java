@@ -52,4 +52,7 @@ public class ElytronUserBean implements ElytronUserDAO {
 		return em.createNamedQuery(ElytronUser.QUERY_FIND_ALL, ElytronUser.class).getResultList();
 	}
 
+	public List<ElytronUser> findAllExpanded() {
+		return em.createNamedQuery(ElytronUser.QUERY_FIND_ALL_EXPANDED, ElytronUser.class).getResultList();
+	}
 }

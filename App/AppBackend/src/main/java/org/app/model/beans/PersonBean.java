@@ -12,8 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.app.model.audit.RevInfo;
 import org.app.model.dao.AddressDAO;
+import org.app.model.dao.CommunicationDAO;
 import org.app.model.dao.PersonDAO;
 import org.app.model.entity.Address;
+import org.app.model.entity.Communication;
 import org.app.model.entity.Person;
 import org.app.model.entity.Person_AUD;
 import org.hibernate.envers.AuditReader;
@@ -33,6 +35,9 @@ public class PersonBean implements PersonDAO {
 	@EJB
 	AddressDAO addressDAO;
 
+	@EJB
+	CommunicationDAO communicationDAO;
+	
 	@Override
 //	@RolesAllowed(value = { "PowerUser" })
 //	@PermitAll
@@ -99,7 +104,7 @@ public class PersonBean implements PersonDAO {
 
 	@Override
 	public List<Address> findAddresses(Person person) {
-		return em.createNamedQuery(Address.QUERY_GET_BY_PERSONID, Address.class).setParameter("personID", person.getId()).getResultList();
+		return em.createNamedQuery(Address.QUERY_FIND_BY_PERSONID, Address.class).setParameter("personID", person.getId()).getResultList();
 	}
 
 	public void removeAddress(Address toBeRemoved) {
@@ -125,4 +130,23 @@ public class PersonBean implements PersonDAO {
 	// person.getAddresses().remove(toBeRemoved);
 	// addressDAO.update(toBeRemoved);
 	// }
+	
+	@Override
+	public void addCommunication(Communication communication, Person person) {
+		communication.setPerson(person);
+		person.getCommunications().add(communication);
+		communicationDAO.update(communication);
+	}
+
+	@Override
+	public List<Communication> findCommunications(Person person) {
+		return em.createNamedQuery(Communication.QUERY_FIND_BY_PERSONID, Communication.class).setParameter("personID", person.getId()).getResultList();
+	}
+
+	@Override
+	public void removeCommunication(Communication toBeRemoved) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

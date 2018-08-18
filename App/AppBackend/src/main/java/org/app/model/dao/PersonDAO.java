@@ -3,6 +3,7 @@ package org.app.model.dao;
 import java.util.List;
 
 import org.app.model.entity.Address;
+import org.app.model.entity.Communication;
 import org.app.model.entity.Person;
 import org.app.model.entity.Person_AUD;
 
@@ -25,5 +26,11 @@ public interface PersonDAO {
 	public List<Address> findAddresses(Person person);
 
 	public void removeAddress(Address toBeRemoved);
+	
+	public void addCommunication(Communication address, Person person);
+
+	public List<Communication> findCommunications(Person person);
+
+	public void removeCommunication(Communication toBeRemoved);
 
 }

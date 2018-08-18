@@ -5,15 +5,22 @@ import java.util.List;
 import org.app.helper.I18n;
 import org.app.model.dao.PersonDAO;
 import org.app.model.entity.Address;
+import org.app.model.entity.Communication;
+import org.app.model.entity.CommunicationType;
+import org.app.model.entity.ElytronRole;
 import org.app.model.entity.Person;
+import org.app.model.entity.Title;
+
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -21,9 +28,14 @@ import com.vaadin.ui.themes.ValoTheme;
 public class CommunicationView extends VerticalLayout {
 
 	private I18n i18n;
-	private Grid<Address> grid;
-	private ListDataProvider<Address> addressDataProvider;
-	private List<Address> addressList;
+	private Grid<Communication> grid;
+	private ListDataProvider<Communication> communicationDataProvider;
+	private List<Communication> communicationList;
+
+	
+	private TextField newCommunicationField = new TextField();
+	private TextField newCommentField = new TextField();
+	private ComboBox<CommunicationType> cbxCommunicationType = new ComboBox<>();
 
 	public CommunicationView(PersonDAO personDAO, Person selectedPerson) {
 		setMargin(new MarginInfo(false, false, false, true));
@@ -33,23 +45,29 @@ public class CommunicationView extends VerticalLayout {
 
 		HorizontalLayout addressNavBar;
 		i18n = new I18n();
-		addressList = new ArrayList<Address>();
-		addressList = personDAO.findAddresses(selectedPerson);
+		communicationList = new ArrayList<Communication>();
+		communicationList = personDAO.findCommunications(selectedPerson);
 		
-		addressDataProvider = DataProvider.ofCollection(addressList);
-		grid = new Grid<Address>();
-		grid.setStyleName("pilger-address-view-grid");
-		//grid.setWidth("95%");
+		communicationDataProvider = DataProvider.ofCollection(communicationList);
+		grid = new Grid<Communication>();
 		grid.setSizeFull();
-
 		grid.setSelectionMode(SelectionMode.MULTI);
-		grid.setDataProvider(addressDataProvider);
-
-		grid.addColumn(address -> address.getStreet()).setCaption(i18n.PERSON_STREET);
-		grid.addColumn(address -> address.getPostbox()).setCaption(i18n.PERSON_POSTBOX);
-		grid.addColumn(address -> address.getZip()).setCaption(i18n.PERSON_ZIPCODE);
-		grid.addColumn(address -> address.getCity()).setCaption(i18n.PERSON_CITY);
+		grid.setDataProvider(communicationDataProvider);
 		
+//		List<CommunicationType> communicationTypeList = personDAO.findCommunications(selectedPerson).;
+//		cbxCommunicationType.setPageLength(8);
+//		cbxCommunicationType.setEmptySelectionAllowed(false);
+//		cbxCommunicationType.setItems(communicationTypeList);
+//		cbxCommunicationType.setItemCaptionGenerator(CommunicationType::getCommunicationType);
+		
+		grid.addColumn(Communication::getCommunication).setCaption(i18n.PERSON_COMMUNICATION).setEditorComponent(newCommunicationField,
+				Communication::setCommunication);
+
+		grid.addColumn(Communication::getComment).setCaption(i18n.BASIC_COMMENT).setEditorComponent(newCommentField,
+				Communication::setComment);
+
+
+
 		
 		Button add = new Button("+");
 		Button delete = new Button("-");

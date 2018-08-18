@@ -21,16 +21,14 @@ import org.hibernate.envers.Audited;
 @Entity
 @Audited
 @NamedQueries({ 
-	@NamedQuery(name = Address.QUERY_GET_ALL, query = "SELECT c FROM Address c"), 
-	@NamedQuery(name = Address.QUERY_GET_BY_PERSONID, query = "SELECT a FROM Address a WHERE a.person.id = :personID")	
+	@NamedQuery(name = Address.QUERY_FIND_ALL, query = "SELECT c FROM Address c"), 
+	@NamedQuery(name = Address.QUERY_FIND_BY_PERSONID, query = "SELECT a FROM Address a WHERE a.person.id = :personID")	
 })
 public class Address extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	public static final String QUERY_GET_ALL = "Address.GetAll";
-
-	public static final String QUERY_GET_BY_PERSONID = "Address.GetByPersonID";
+	public static final String QUERY_FIND_ALL = "Address.FindAll";
+	public static final String QUERY_FIND_BY_PERSONID = "Address.FindByPersonID";
 
 	private String street;
 	
@@ -87,10 +85,4 @@ public class Address extends Superclass implements Serializable {
 		this.person = person;
 	}
 	
-	public void prePersist() {
-		if (getUuid() == null) {
-			setUuid(UUID.randomUUID().toString());
-		}
-	}
-
 }

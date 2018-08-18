@@ -45,6 +45,10 @@ public class Person extends Superclass implements Serializable {
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Address> addresses = new HashSet<Address>();
 
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Set<Communication> communications = new HashSet<Communication>();
+
+
 	public Set<Address> getAddresses() {
 		return addresses;
 	}
@@ -61,6 +65,14 @@ public class Person extends Superclass implements Serializable {
 	public void removeAddress(Address address) {
 		addresses.remove(address);
 		address.setPerson(null);
+	}
+
+	public Set<Communication> getCommunications() {
+		return communications;
+	}
+
+	public void setCommunications(Set<Communication> communications) {
+		this.communications = communications;
 	}
 
 }
