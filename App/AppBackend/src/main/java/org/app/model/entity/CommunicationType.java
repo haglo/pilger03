@@ -23,10 +23,9 @@ public class CommunicationType extends Superclass implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String QUERY_GET_ALL = "CommunicationType.GetAll";
 
-	
 	@NotNull
 	private int listPrio;
-	
+
 	@NotNull
 	private String communicationType;
 
@@ -45,6 +44,5 @@ public class CommunicationType extends Superclass implements Serializable {
 	public void setCommunicationType(String communicationType) {
 		this.communicationType = communicationType;
 	}
-	
 
 }
