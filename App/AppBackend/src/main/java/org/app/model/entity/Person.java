@@ -6,10 +6,12 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PersistenceContext;
 
 import org.hibernate.envers.Audited;
 
@@ -17,7 +19,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @NamedQueries({ @NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") })
 public class Person extends Superclass implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_GET_ALL = "Person.GetAll";

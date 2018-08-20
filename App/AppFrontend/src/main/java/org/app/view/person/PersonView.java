@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.app.controler.AccountService;
+import org.app.controler.AddressService;
 import org.app.controler.PersonService;
 import org.app.helper.I18n;
 import org.app.model.entity.Person;
@@ -37,9 +38,10 @@ public class PersonView extends VerticalLayout implements View {
 
 	@Inject
 	PersonService personService;
-
+	
 	@Inject
-	AccountService accountService;
+	AddressService addressService;
+
 
 	private I18n i18n;
 	private Person selectedPerson;
@@ -58,6 +60,7 @@ public class PersonView extends VerticalLayout implements View {
 
 	public PersonView() {
 		i18n = new I18n();
+		saveModus = SaveModus.UPDATE;
 		setSizeFull();
 		setMargin(new MarginInfo(false, true, true, true));
 		setWidth("1200px");
@@ -65,7 +68,6 @@ public class PersonView extends VerticalLayout implements View {
 
 	@PostConstruct
 	void init() {
-		
 		mainContent = new VerticalSplitPanel();
 		mainContent.setSplitPosition(50, Unit.PERCENTAGE);
 		mainContent.setSizeFull();
@@ -74,7 +76,7 @@ public class PersonView extends VerticalLayout implements View {
 		personContent.setWidth("100%");
 		addressCommunicationContent = new HorizontalLayout();
 		addressCommunicationContent.setWidth("100%");
-		
+
 		saveModus = SaveModus.UPDATE;
 		selectedPersons = new HashSet<Person>();
 		selectedPerson = new Person();
@@ -119,11 +121,10 @@ public class PersonView extends VerticalLayout implements View {
 		});
 
 		personGrid.getEditor().addCancelListener(event -> {
+			selectedPerson = new Person();
 			if (saveModus == SaveModus.UPDATE) {
-				selectedPerson = new Person();
 				selectedPerson = event.getBean();
 			} else {
-				newPerson = new Person();
 				newPerson = event.getBean();
 				deletePerson(newPerson);
 			}
@@ -178,7 +179,7 @@ public class PersonView extends VerticalLayout implements View {
 			e.printStackTrace();
 		}
 
-		addressView = new AddressView(personService.getPersonDAO(), selectedPerson);
+		addressView = new AddressView(selectedPerson, personService, addressService);
 		addressCommunicationContent.addComponent(addressView);
 	}
 
@@ -253,7 +254,6 @@ public class PersonView extends VerticalLayout implements View {
 			personService.getPersonDAO().create(person);
 			refreshGrid();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			saveModus = SaveModus.UPDATE;
@@ -265,7 +265,6 @@ public class PersonView extends VerticalLayout implements View {
 			personService.getPersonDAO().remove(person.getId());
 			refreshGrid();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			saveModus = SaveModus.UPDATE;
@@ -283,10 +282,6 @@ public class PersonView extends VerticalLayout implements View {
 
 	public PersonService getPersonService() {
 		return personService;
-	}
-
-	public AccountService getAccountService() {
-		return accountService;
 	}
 
 }
