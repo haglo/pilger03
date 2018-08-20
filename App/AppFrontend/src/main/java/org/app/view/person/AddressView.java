@@ -69,11 +69,12 @@ public class AddressView extends VerticalLayout {
 
 		grid.getEditor().setEnabled(true);
 		grid.getEditor().addSaveListener(event -> {
-			selectedAddress = new Address();
 			selectedAddress = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
-				updateRow(selectedAddress);
-			} else {
+				addressService.getAddressDAO().update(selectedAddress);
+				resetGrid();
+			}
+			if (saveModus == SaveModus.NEW) {
 				selectedPerson.getAddresses().add(selectedAddress);
 				personDAO.update(selectedPerson);
 				resetGrid();
@@ -98,15 +99,7 @@ public class AddressView extends VerticalLayout {
 				Address::setComment);
 
 		Button add = new Button("+");
-		add.addClickListener(event -> {
-			saveModus = SaveModus.NEW;
-			Address newAddress = new Address();
-			newAddress.setPerson(selectedPerson);
-			addressList.add(newAddress);
-			grid.setItems(addressList);
-			grid.getEditor().editRow(addressList.size() - 1);
-			txfPostbox.focus();
-		});
+		add.addClickListener(event -> addRow());
 
 		Button delete = new Button("-");
 		delete.addClickListener(event -> deleteRow());
@@ -116,6 +109,16 @@ public class AddressView extends VerticalLayout {
 
 		addComponent(grid);
 		addComponent(addressNavBar);
+	}
+
+	private void addRow() {
+		saveModus = SaveModus.NEW;
+		Address newAddress = new Address();
+		newAddress.setPerson(selectedPerson);
+		addressList.add(newAddress);
+		grid.setItems(addressList);
+		grid.getEditor().editRow(addressList.size() - 1);
+		txfPostbox.focus();
 	}
 
 	private void deleteRow() {
@@ -130,17 +133,12 @@ public class AddressView extends VerticalLayout {
 		resetGrid();
 	}
 
-	public void updateRow(Address address) {
-		addressService.getAddressDAO().update(address);
-		resetGrid();
-	}
-
 	private enum SaveModus {
 		NEW, UPDATE
 	}
 
 	public void resetGrid() {
-		addressList.clear(); 
+		addressList.clear();
 		addressList = personDAO.findAddresses(selectedPerson);
 		grid.setItems(addressList);
 		saveModus = SaveModus.UPDATE;
