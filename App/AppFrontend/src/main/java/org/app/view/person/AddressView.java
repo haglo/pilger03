@@ -63,8 +63,6 @@ public class AddressView extends VerticalLayout {
 		grid.setDataProvider(addressDataProvider);
 
 		grid.addSelectionListener(event -> {
-//			selectedAddresses = new HashSet<Address>();
-//			selectedAddresses.clear();
 			selectedAddresses = event.getAllSelectedItems();
 		});
 
