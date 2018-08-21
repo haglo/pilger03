@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.app.controler.AddressService;
 import org.app.controler.PersonService;
@@ -23,18 +24,18 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+
 @SuppressWarnings("serial")
 public class AddressView extends VerticalLayout {
 
 	private I18n i18n;
 	private Person selectedPerson;
 	private PersonDAO personDAO;
-	private AddressService addressService;
 	private Grid<Address> grid;
 	private ListDataProvider<Address> addressDataProvider;
 	private Address selectedAddress;
 	private Set<Address> selectedAddresses;
-	private List<Address> addressList;
+	private Set<Address> personAddresses;
 
 	private SaveModus saveModus;
 	private TextField txfStreet = new TextField();
@@ -43,27 +44,27 @@ public class AddressView extends VerticalLayout {
 	private TextField txfCity = new TextField();
 	private TextField txfComment = new TextField();
 
-	public AddressView(Person selectedPerson, PersonService personService, AddressService addressService) {
+	public AddressView(Person person, PersonService service) {
 		setMargin(new MarginInfo(false, true, false, false));
 		setSizeFull();
 		saveModus = SaveModus.UPDATE;
-		this.selectedPerson = selectedPerson;
-		this.addressService = addressService;
-		this.personDAO = personService.getPersonDAO();
+		this.selectedPerson = person;
+		this.personDAO = service.getPersonDAO();
+		this.selectedAddresses = new HashSet<Address>();
 
 		i18n = new I18n();
-		addressList = new ArrayList<Address>();
-		addressList = personDAO.findAddresses(selectedPerson);
+		personAddresses = new TreeSet<Address>();
+		personAddresses = selectedPerson.getAddresses();
 
-		addressDataProvider = DataProvider.ofCollection(addressList);
+		addressDataProvider = DataProvider.ofCollection(personAddresses);
 		grid = new Grid<Address>();
 		grid.setSizeFull();
 		grid.setSelectionMode(SelectionMode.MULTI);
 		grid.setDataProvider(addressDataProvider);
 
 		grid.addSelectionListener(event -> {
-			selectedAddresses = new HashSet<Address>();
-			selectedAddresses.clear();
+//			selectedAddresses = new HashSet<Address>();
+//			selectedAddresses.clear();
 			selectedAddresses = event.getAllSelectedItems();
 		});
 
@@ -71,7 +72,7 @@ public class AddressView extends VerticalLayout {
 		grid.getEditor().addSaveListener(event -> {
 			selectedAddress = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
-				addressService.getAddressDAO().update(selectedAddress);
+				selectedPerson.updateAddress(selectedAddress);
 				resetGrid();
 			}
 			if (saveModus == SaveModus.NEW) {
@@ -115,9 +116,9 @@ public class AddressView extends VerticalLayout {
 		saveModus = SaveModus.NEW;
 		Address newAddress = new Address();
 		newAddress.setPerson(selectedPerson);
-		addressList.add(newAddress);
-		grid.setItems(addressList);
-		grid.getEditor().editRow(addressList.size() - 1);
+		personAddresses.add(newAddress);
+		grid.setItems(personAddresses);
+		grid.getEditor().editRow(personAddresses.size() - 1);
 		txfPostbox.focus();
 	}
 
@@ -138,10 +139,12 @@ public class AddressView extends VerticalLayout {
 	}
 
 	public void resetGrid() {
-		addressList.clear();
-		addressList = personDAO.findAddresses(selectedPerson);
-		grid.setItems(addressList);
 		saveModus = SaveModus.UPDATE;
+		personAddresses.clear();
+		personAddresses = selectedPerson.getAddresses();
+		addressDataProvider = DataProvider.ofCollection(personAddresses);
+		grid.setDataProvider(addressDataProvider);
+		grid.setItems(personAddresses);
 	}
 
 }

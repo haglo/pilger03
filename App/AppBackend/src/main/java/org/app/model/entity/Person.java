@@ -19,7 +19,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @NamedQueries({ @NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") })
 public class Person extends Superclass implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_GET_ALL = "Person.GetAll";
@@ -50,7 +50,6 @@ public class Person extends Superclass implements Serializable {
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Communication> communications = new HashSet<Communication>();
 
-
 	public Set<Address> getAddresses() {
 		return addresses;
 	}
@@ -67,6 +66,16 @@ public class Person extends Superclass implements Serializable {
 	public void removeAddress(Address address) {
 		addresses.remove(address);
 		address.setPerson(null);
+	}
+
+	public void updateAddress(Address address) {
+		for (Address entry : addresses) {
+			if (entry.getUuid().equals(address.getUuid())) {
+				addresses.remove(entry);
+				address.setPerson(this);
+				addresses.add(address);
+			}
+		}
 	}
 
 	public Set<Communication> getCommunications() {

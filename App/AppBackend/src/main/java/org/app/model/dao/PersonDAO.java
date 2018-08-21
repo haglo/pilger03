@@ -21,16 +21,5 @@ public interface PersonDAO {
 
 	public List<Person_AUD> findAudById(Integer personId);
 	
-	public void addAddress(Address address, Person person);
-
-	public List<Address> findAddresses(Person person);
-
-	public void removeAddress(Address toBeRemoved);
-	
-	public void addCommunication(Communication address, Person person);
-
-	public List<Communication> findCommunications(Person person);
-
-	public void removeCommunication(Communication toBeRemoved);
 
 }

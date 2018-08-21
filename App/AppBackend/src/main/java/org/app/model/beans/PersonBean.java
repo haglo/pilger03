@@ -51,7 +51,6 @@ public class PersonBean implements PersonDAO {
 //	@RolesAllowed(value = { "PowerUser" })
 //	@PermitAll
 	public Person update(Person person) {
-
 		try {
 			return em.merge(person);
 		} finally {
@@ -95,58 +94,5 @@ public class PersonBean implements PersonDAO {
 
 	}
 	
-	@Override
-	public void addAddress(Address address, Person person) {
-		address.setPerson(person);
-		person.getAddresses().add(address);
-		addressDAO.update(address);
-	}
-
-	@Override
-	public List<Address> findAddresses(Person person) {
-		return em.createNamedQuery(Address.QUERY_FIND_BY_PERSONID, Address.class).setParameter("personID", person.getId()).getResultList();
-	}
-
-	public void removeAddress(Address toBeRemoved) {
-//		System.out.println("====================");
-//		System.out.println("Firstname of Person: " + toBeRemoved.getPerson().getFirstName());
-//		System.out.println("ID of Address: " + toBeRemoved.getId());
-//		System.out.println("Street of Address: " + toBeRemoved.getStreet());
-//		System.out.println("====================");
-
-		// toBeRemoved.setPerson(toBeRemoved.getPerson());
-		// toBeRemoved.getPerson().getAddresses().remove(toBeRemoved);
-		// addressDAO.remove(toBeRemoved.getId());
-
-	}
-
-	// public void removeAddress(Address toBeRemoved) {
-	// Address merged = em.find(Address.class, toBeRemoved.getId());
-	// toBeRemoved.setPerson(null);
-	// em.remove(toBeRemoved);
-	// em.flush();
-	// toBeRemoved.getPerson();
-	// em.remove(toBeRemoved);
-	// person.getAddresses().remove(toBeRemoved);
-	// addressDAO.update(toBeRemoved);
-	// }
-	
-	@Override
-	public void addCommunication(Communication communication, Person person) {
-		communication.setPerson(person);
-		person.getCommunications().add(communication);
-		communicationDAO.update(communication);
-	}
-
-	@Override
-	public List<Communication> findCommunications(Person person) {
-		return em.createNamedQuery(Communication.QUERY_FIND_BY_PERSONID, Communication.class).setParameter("personID", person.getId()).getResultList();
-	}
-
-	@Override
-	public void removeCommunication(Communication toBeRemoved) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

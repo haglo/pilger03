@@ -103,6 +103,9 @@ public class PersonView extends VerticalLayout implements View {
 			} else {
 				selectedPerson = getTheSelectedPerson(selectedPersons);
 				if (selectedPerson != null) {
+					if (addressCommunicationContent.isAttached()) {
+						removeComponent(addressCommunicationContent);
+					}
 					showAddresses(selectedPerson);
 					showCommunication(selectedPerson);
 					mainContent.setSecondComponent(addressCommunicationContent);
@@ -172,14 +175,14 @@ public class PersonView extends VerticalLayout implements View {
 	private void showAddresses(Person selectedPerson) {
 
 		try {
-			if (addressCommunicationContent.isAttached()) {
-				removeComponent(addressCommunicationContent);
+			if (addressView.isAttached()) {
+				removeComponent(addressView);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		addressView = new AddressView(selectedPerson, personService, addressService);
+		addressView = new AddressView(selectedPerson, personService);
 		addressCommunicationContent.addComponent(addressView);
 	}
 
@@ -187,13 +190,13 @@ public class PersonView extends VerticalLayout implements View {
 
 		try {
 			if (communicationView.isAttached()) {
-				removeComponent(addressView);
+				removeComponent(communicationView);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		communicationView = new CommunicationView(personService.getPersonDAO(), selectedPerson);
+		communicationView = new CommunicationView(selectedPerson, personService);
 		addressCommunicationContent.addComponent(communicationView);
 	}
 

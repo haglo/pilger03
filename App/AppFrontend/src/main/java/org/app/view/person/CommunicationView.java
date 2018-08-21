@@ -2,6 +2,10 @@ package org.app.view.person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.app.controler.PersonService;
 import org.app.helper.I18n;
 import org.app.model.dao.PersonDAO;
 import org.app.model.entity.Address;
@@ -27,26 +31,24 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 public class CommunicationView extends VerticalLayout {
 
+	private Person selectedPerson;
 	private I18n i18n;
 	private Grid<Communication> grid;
 	private ListDataProvider<Communication> communicationDataProvider;
-	private List<Communication> communicationList;
+	private Set<Communication> communicationList;
 
-	
 	private TextField newCommunicationField = new TextField();
 	private TextField newCommentField = new TextField();
-	private ComboBox<CommunicationType> cbxCommunicationType = new ComboBox<>();
 
-	public CommunicationView(PersonDAO personDAO, Person selectedPerson) {
+	public CommunicationView(Person person, PersonService service) {
 		setMargin(new MarginInfo(false, false, false, true));
-		setStyleName("pilger-address-view");
-		//setWidth("45%");
 		setSizeFull();
+		
+		this.selectedPerson = person;
 
-		HorizontalLayout addressNavBar;
 		i18n = new I18n();
-		communicationList = new ArrayList<Communication>();
-		communicationList = personDAO.findCommunications(selectedPerson);
+		communicationList = new TreeSet<Communication>();
+		communicationList = selectedPerson.getCommunications();
 		
 		communicationDataProvider = DataProvider.ofCollection(communicationList);
 		grid = new Grid<Communication>();
@@ -54,21 +56,12 @@ public class CommunicationView extends VerticalLayout {
 		grid.setSelectionMode(SelectionMode.MULTI);
 		grid.setDataProvider(communicationDataProvider);
 		
-//		List<CommunicationType> communicationTypeList = personDAO.findCommunications(selectedPerson).;
-//		cbxCommunicationType.setPageLength(8);
-//		cbxCommunicationType.setEmptySelectionAllowed(false);
-//		cbxCommunicationType.setItems(communicationTypeList);
-//		cbxCommunicationType.setItemCaptionGenerator(CommunicationType::getCommunicationType);
-		
 		grid.addColumn(Communication::getCommunication).setCaption(i18n.PERSON_COMMUNICATION).setEditorComponent(newCommunicationField,
 				Communication::setCommunication);
 
 		grid.addColumn(Communication::getComment).setCaption(i18n.BASIC_COMMENT).setEditorComponent(newCommentField,
 				Communication::setComment);
 
-
-
-		
 		Button add = new Button("+");
 		Button delete = new Button("-");
 

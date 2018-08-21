@@ -14,5 +14,4 @@ public interface AddressDAO {
 
 	public Address findByID(Integer id);
 
-	public List<Address> findAll();
 }

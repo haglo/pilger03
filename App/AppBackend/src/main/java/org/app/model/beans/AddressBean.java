@@ -40,9 +40,5 @@ public class AddressBean implements AddressDAO {
 		return em.find(Address.class, id);
 	}
 
-	@Override
-	public List<Address> findAll() {
-		return em.createNamedQuery(Address.QUERY_FIND_ALL, Address.class).getResultList();
-	}
 
 }
