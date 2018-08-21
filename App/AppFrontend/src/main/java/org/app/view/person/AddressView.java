@@ -1,12 +1,8 @@
 package org.app.view.person;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.app.controler.AddressService;
 import org.app.controler.PersonService;
 import org.app.helper.I18n;
 import org.app.model.dao.PersonDAO;
@@ -113,10 +109,6 @@ public class AddressView extends VerticalLayout {
 
 	private void addRow() {
 		saveModus = SaveModus.NEW;
-//		Address newAddress = new Address();
-//		newAddress.setPerson(selectedPerson);
-//		personAddresses.add(newAddress);
-//		grid.setItems(personAddresses);
 		grid.getEditor().editRow(personAddresses.size() - 1);
 		txfPostbox.focus();
 	}
@@ -139,11 +131,7 @@ public class AddressView extends VerticalLayout {
 
 	public void resetGrid() {
 		saveModus = SaveModus.UPDATE;
-		personAddresses.clear();
-		personAddresses = selectedPerson.getAddresses();
-		addressDataProvider = DataProvider.ofCollection(personAddresses);
-		grid.setDataProvider(addressDataProvider);
-		grid.setItems(personAddresses);
+		addressDataProvider.refreshAll();
 	}
 
 }
