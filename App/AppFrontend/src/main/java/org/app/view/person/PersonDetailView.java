@@ -24,11 +24,13 @@ public class PersonDetailView extends Window {
 	private Button saveButton;
 
 	private PersonService personService;
+	private Person selectedPerson;
 
 	@SuppressWarnings("static-access")
-	public PersonDetailView(PersonView personView, Person selectedPerson) {
+	public PersonDetailView(Person person, PersonView view) {
 		i18n = new I18n();
-		this.personService = personView.getPersonService();
+		this.selectedPerson = person;
+		this.personService = view.personService;
 		saveButton = new Button(i18n.BASIC_SAVE);
 
 		this.setCaption(i18n.TITLE_WINDOW_DETAIL_CAPTION);
@@ -73,8 +75,8 @@ public class PersonDetailView extends Window {
 				selectedPerson.setFirstName(txfFirstname.getValue());
 				selectedPerson.setLastName(txfLastname.getValue());
 				selectedPerson.setComment(txaComment.getValue());
-				personView.updateRow(selectedPerson);
-				personView.refreshGrid();
+				personService.getPersonDAO().update(selectedPerson);
+				view.refreshGrid();
 				getUI().getCurrent().removeWindow(this);
 			});
 

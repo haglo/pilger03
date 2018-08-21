@@ -154,7 +154,7 @@ public class PersonView extends VerticalLayout implements View {
 
 		Button detail = new Button("", ev -> {
 			if (getTheSelectedPerson(selectedPersons) != null) {
-				getUI().addWindow(new PersonDetailView(this, getTheSelectedPerson(selectedPersons)));
+				getUI().addWindow(new PersonDetailView(getTheSelectedPerson(selectedPersons), this));
 			}
 			refreshGrid();
 
@@ -281,10 +281,6 @@ public class PersonView extends VerticalLayout implements View {
 
 	private enum SaveModus {
 		NEW, UPDATE
-	}
-
-	public PersonService getPersonService() {
-		return personService;
 	}
 
 }
