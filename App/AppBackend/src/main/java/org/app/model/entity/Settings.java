@@ -17,14 +17,10 @@ import org.app.model.entity.enums.DefaultTheme;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = Settings.QUERY_FIND_ALL, query = "SELECT c FROM Settings c") })
-public class Settings implements Serializable {
+public class Settings extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public static final String QUERY_FIND_ALL = "Settings.FindAll";
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 
 	/**
 	 * Einbinden: Enum Language über ComboBox
@@ -39,14 +35,6 @@ public class Settings implements Serializable {
 	private DefaultTheme defaultTheme;
 
 	private String defaultWindowWidth;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public DefaultLanguage getDefaultLanguage() {
 		return defaultLanguage;

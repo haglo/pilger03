@@ -24,7 +24,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-
 @SuppressWarnings("serial")
 public class AddressView extends VerticalLayout {
 
@@ -68,13 +67,15 @@ public class AddressView extends VerticalLayout {
 
 		grid.getEditor().setEnabled(true);
 		grid.getEditor().addSaveListener(event -> {
+			selectedAddress = new Address();
 			selectedAddress = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
 				selectedPerson.updateAddress(selectedAddress);
+				personDAO.update(selectedPerson);
 				resetGrid();
 			}
 			if (saveModus == SaveModus.NEW) {
-				selectedPerson.getAddresses().add(selectedAddress);
+				selectedPerson.addAddress(selectedAddress);
 				personDAO.update(selectedPerson);
 				resetGrid();
 			}
@@ -112,10 +113,10 @@ public class AddressView extends VerticalLayout {
 
 	private void addRow() {
 		saveModus = SaveModus.NEW;
-		Address newAddress = new Address();
-		newAddress.setPerson(selectedPerson);
-		personAddresses.add(newAddress);
-		grid.setItems(personAddresses);
+//		Address newAddress = new Address();
+//		newAddress.setPerson(selectedPerson);
+//		personAddresses.add(newAddress);
+//		grid.setItems(personAddresses);
 		grid.getEditor().editRow(personAddresses.size() - 1);
 		txfPostbox.focus();
 	}
