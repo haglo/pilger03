@@ -17,8 +17,10 @@ public final class I18n {
 	public static final String ELYTRON_USER_VIEW = "ElytronUserView";
 	public static final String THEME = "Theme";
 	public static final String LOCALE = "Locale";
-
+	
 	public static String MIN_WIDTH;
+
+	public String BASIC_ID = "ID";
 
 	public String BASIC_EDIT = i18m.getMessage("basic.edit");
 	public String BASIC_SAVE = i18m.getMessage("basic.save");

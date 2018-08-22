@@ -1,6 +1,11 @@
 package org.app.view.person;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import org.app.controler.PersonService;
@@ -10,10 +15,12 @@ import org.app.model.entity.Address;
 import org.app.model.entity.Person;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -48,7 +55,7 @@ public class AddressView extends VerticalLayout {
 		this.selectedAddresses = new HashSet<Address>();
 
 		i18n = new I18n();
-		personAddresses = new TreeSet<Address>();
+		personAddresses = new LinkedHashSet<Address>();
 		personAddresses = selectedPerson.getAddresses();
 
 		addressDataProvider = DataProvider.ofCollection(personAddresses);
@@ -83,6 +90,7 @@ public class AddressView extends VerticalLayout {
 			}
 		});
 
+		grid.addColumn(address -> address.getId()).setCaption(i18n.BASIC_ID).setId(i18n.BASIC_ID).setHidden(true);
 		grid.addColumn(address -> address.getPostbox()).setCaption(i18n.PERSON_POSTBOX).setEditorComponent(txfPostbox,
 				Address::setPostbox);
 		grid.addColumn(address -> address.getStreet()).setCaption(i18n.PERSON_STREET).setEditorComponent(txfStreet,
@@ -109,6 +117,12 @@ public class AddressView extends VerticalLayout {
 
 	private void addRow() {
 		saveModus = SaveModus.NEW;
+		Address newAddress = new Address();
+		newAddress.setPerson(selectedPerson);
+		personAddresses.add(newAddress);
+		addressDataProvider.refreshAll();
+		
+		grid.sort(i18n.BASIC_ID, SortDirection.ASCENDING);
 		grid.getEditor().editRow(personAddresses.size() - 1);
 		txfPostbox.focus();
 	}
