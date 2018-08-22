@@ -61,11 +61,11 @@ public class Person extends Superclass implements Serializable {
 	}
 
 	void addAddress(Address address, boolean set) {
-		if (address != null) {
-			getAddresses().add(address);
-		}
 		if (set) {
 			address.setPerson(this, false);
+			if (address != null) {
+				getAddresses().add(address);
+			}
 		}
 	}
 
@@ -102,15 +102,4 @@ public class Person extends Superclass implements Serializable {
 		communication.setPerson(null);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Person))
-			return false;
-		Person other = (Person) obj;
-		return Objects.equals(this.getUuid(), other.getUuid());
-	}
 }
