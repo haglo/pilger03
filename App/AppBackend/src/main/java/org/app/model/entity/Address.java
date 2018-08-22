@@ -1,6 +1,7 @@
 package org.app.model.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -78,7 +79,17 @@ public class Address extends Superclass implements Serializable {
 	}
 
 	public void setPerson(Person person) {
+		setPerson(person, true);
 		this.person = person;
 	}
+	
+	void setPerson(Person person, boolean add) {
+		this.person = person;
+		if (person != null && add) {
+			person.addAddress(this, false);
+		}
+	}
+
+
 	
 }

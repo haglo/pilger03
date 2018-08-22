@@ -2,17 +2,15 @@ package org.app.model.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PersistenceContext;
-
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -59,8 +57,16 @@ public class Person extends Superclass implements Serializable {
 	}
 
 	public void addAddress(Address address) {
-		addresses.add(address);
-		address.setPerson(this);
+		addAddress(address, true);
+	}
+
+	void addAddress(Address address, boolean set) {
+		if (address != null) {
+			getAddresses().add(address);
+		}
+		if (set) {
+			address.setPerson(this, false);
+		}
 	}
 
 	public void removeAddress(Address address) {
@@ -94,5 +100,17 @@ public class Person extends Superclass implements Serializable {
 	public void removeCommunication(Communication communication) {
 		communications.remove(communication);
 		communication.setPerson(null);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Person))
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(this.getUuid(), other.getUuid());
 	}
 }
