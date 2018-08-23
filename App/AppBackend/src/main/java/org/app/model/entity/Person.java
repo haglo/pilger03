@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -56,6 +59,7 @@ public class Person extends Superclass implements Serializable {
 		this.addresses = addresses;
 	}
 
+	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void addAddress(Address address) {
 		addAddress(address, true);
 	}
@@ -69,11 +73,13 @@ public class Person extends Superclass implements Serializable {
 		}
 	}
 
+	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void removeAddress(Address address) {
 		addresses.remove(address);
 		address.setPerson(null);
 	}
 
+	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void updateAddress(Address address) {
 		for (Address entry : addresses) {
 			if (entry.getUuid().equals(address.getUuid())) {

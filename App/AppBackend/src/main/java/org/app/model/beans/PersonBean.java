@@ -51,12 +51,9 @@ public class PersonBean implements PersonDAO {
 //	@RolesAllowed(value = { "PowerUser" })
 //	@PermitAll
 	public Person update(Person person) {
-		try {
-			return em.merge(person);
-		} finally {
-			em.flush();
-		}
-
+		em.merge(person);
+		em.flush();
+		return person;
 	}
 
 	@Override
