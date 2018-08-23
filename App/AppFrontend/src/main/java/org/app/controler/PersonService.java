@@ -4,8 +4,12 @@ import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 
 import org.app.model.dao.PersonDAO;
+import org.app.model.entity.Address;
+import org.app.model.entity.Person;
 
 /*
  * Managed Bean
@@ -35,6 +39,11 @@ public class PersonService implements Serializable {
 		this.isEditing = !this.isEditing;
 	}
 
+	public void addAddress(@Observes(during=TransactionPhase.AFTER_SUCCESS) Address address, Person person) {
+		person.addAddress(address);
+		personDAO.update(person);
+	}
+	
 	public PersonDAO getPersonDAO() {
 		return personDAO;
 	}

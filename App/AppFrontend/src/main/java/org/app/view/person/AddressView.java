@@ -81,6 +81,7 @@ public class AddressView extends VerticalLayout {
 				selectedPerson.addAddress(selectedAddress);
 				personDAO.update(selectedPerson);
 //				personDAO.addAddress(selectedAddress, selectedPerson);
+//				service.addAddress(selectedAddress, selectedPerson);
 				resetGrid();
 			}
 		});
