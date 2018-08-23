@@ -79,16 +79,7 @@ public class Address extends Superclass implements Serializable {
 	}
 
 	public void setPerson(Person person) {
-		setPerson(person, true);
-	}
-	
-	void setPerson(Person person, boolean add) {
 		this.person = person;
-		if (person != null && add) {
-			person.addAddress(this, false);
-		}
 	}
-
-
 	
 }

@@ -80,6 +80,7 @@ public class AddressView extends VerticalLayout {
 			if (saveModus == SaveModus.NEW) {
 				selectedPerson.addAddress(selectedAddress);
 				personDAO.update(selectedPerson);
+//				personDAO.addAddress(selectedAddress, selectedPerson);
 				resetGrid();
 			}
 		});

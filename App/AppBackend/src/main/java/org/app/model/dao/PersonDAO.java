@@ -21,5 +21,7 @@ public interface PersonDAO {
 
 	public List<Person_AUD> findAudById(Integer personId);
 	
+	public void addAddress(Address address, Person person);
+	
 
 }

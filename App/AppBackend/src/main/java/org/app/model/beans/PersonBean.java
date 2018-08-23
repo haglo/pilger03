@@ -10,6 +10,8 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+
 import org.app.model.audit.RevInfo;
 import org.app.model.dao.AddressDAO;
 import org.app.model.dao.CommunicationDAO;
@@ -29,6 +31,7 @@ import org.hibernate.envers.query.AuditEntity;
 //@SecurityDomain(value="SecurityPilger")
 public class PersonBean implements PersonDAO {
 
+//	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	@PersistenceContext
 	private EntityManager em;
 
@@ -37,13 +40,14 @@ public class PersonBean implements PersonDAO {
 
 	@EJB
 	CommunicationDAO communicationDAO;
-	
+
 	@Override
 //	@RolesAllowed(value = { "PowerUser" })
 //	@PermitAll
 	public Person create(Person person) {
 		em.persist(person);
 		em.flush();
+		em.refresh(person);
 		return person;
 	}
 
@@ -51,8 +55,9 @@ public class PersonBean implements PersonDAO {
 //	@RolesAllowed(value = { "PowerUser" })
 //	@PermitAll
 	public Person update(Person person) {
-		em.merge(person);
+		person = em.merge(person);
 		em.flush();
+		em.refresh(person);
 		return person;
 	}
 
@@ -84,12 +89,18 @@ public class PersonBean implements PersonDAO {
 				.add(AuditEntity.id().eq(personId)).getResultList();
 
 		for (Object[] revData : revDatas) {
-			listAuditedPersons.add(
-					new Person_AUD((Person) revData[0], (RevInfo) revData[1], (RevisionType) revData[2]));
+			listAuditedPersons
+					.add(new Person_AUD((Person) revData[0], (RevInfo) revData[1], (RevisionType) revData[2]));
 		}
 		return listAuditedPersons;
 
 	}
 	
+	@Override
+	public void addAddress(Address address, Person person) {
+		address.setPerson(person);
+		person.getAddresses().add(address);
+		addressDAO.update(address);
+	}
 
 }
