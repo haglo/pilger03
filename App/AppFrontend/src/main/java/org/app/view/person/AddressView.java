@@ -79,7 +79,7 @@ public class AddressView extends VerticalLayout {
 			}
 			if (saveModus == SaveModus.NEW) {
 				selectedPerson.addAddress(selectedAddress);
-				personDAO.create(selectedPerson);
+				personDAO.update(selectedPerson);
 				resetGrid();
 			}
 		});
