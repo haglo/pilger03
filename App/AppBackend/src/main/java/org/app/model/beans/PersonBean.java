@@ -49,7 +49,7 @@ public class PersonBean implements PersonDAO {
 	public Person create(Person person) {
 		em.persist(person);
 		em.flush();
-		em.refresh(person);
+//		em.refresh(person);
 		return person;
 	}
 
