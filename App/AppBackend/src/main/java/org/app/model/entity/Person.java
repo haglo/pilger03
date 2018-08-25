@@ -58,21 +58,16 @@ public class Person extends Superclass implements Serializable {
 		this.addresses = addresses;
 	}
 
-	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void addAddress(Address address) {
 		address.setPerson(this);
 		getAddresses().add(address);
 	}
 
-//	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void removeAddress(Address address) {
 		getAddresses().remove(address);
 		address.setPerson(null);
 	}
 
-//	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-	@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 	public void updateAddress(Address address) {
 		for (Address entry : addresses) {
 			if (entry.getUuid().equals(address.getUuid())) {
