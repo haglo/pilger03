@@ -39,7 +39,8 @@ public class Address extends Superclass implements Serializable {
 	 * Ohne Person darf keine Adresse angelegt werden
 	 * Kontrolliert die Verknüpfung
 	 */
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH} , optional = false)
+	@ManyToOne()
+//	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH} , optional = false)
 	private Person person;
 
 	public String getStreet() {

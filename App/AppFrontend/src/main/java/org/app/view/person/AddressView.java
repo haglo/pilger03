@@ -78,7 +78,9 @@ public class AddressView extends VerticalLayout {
 				resetGrid();
 			}
 			if (saveModus == SaveModus.NEW) {
-				selectedPerson.addAddress(selectedAddress);
+				selectedAddress.setPerson(selectedPerson);
+				personAddresses.add(selectedAddress);
+				selectedPerson.setAddresses(personAddresses);
 				personDAO.update(selectedPerson);
 //				personDAO.addAddress(selectedAddress, selectedPerson);
 //				service.addAddress(selectedAddress, selectedPerson);
@@ -101,8 +103,8 @@ public class AddressView extends VerticalLayout {
 				Address::setZip);
 		grid.addColumn(address -> address.getCity()).setCaption(i18n.PERSON_CITY).setEditorComponent(txfCity,
 				Address::setCity);
-		grid.addColumn(address -> address.getComment()).setCaption(i18n.BASIC_COMMENT).setEditorComponent(txfComment,
-				Address::setComment);
+//		grid.addColumn(address -> address.getComment()).setCaption(i18n.BASIC_COMMENT).setEditorComponent(txfComment,
+//				Address::setComment);
 
 		Button add = new Button("+");
 		add.addClickListener(event -> addRow());
@@ -121,11 +123,17 @@ public class AddressView extends VerticalLayout {
 		saveModus = SaveModus.NEW;
 		Address newAddress = new Address();
 		newAddress.setPerson(selectedPerson);
-		personAddresses.add(newAddress);
-		addressDataProvider.refreshAll();
+		Set tmpAddresses = new LinkedHashSet<Address>();
+		tmpAddresses = selectedPerson.getAddresses();
+		tmpAddresses.add(newAddress);
+		grid.setItems(tmpAddresses);
+		
+//		personAddresses.add(newAddress);
+//		addressDataProvider.refreshAll();
 		
 		grid.sort(i18n.BASIC_ID, SortDirection.ASCENDING);
-		grid.getEditor().editRow(personAddresses.size() - 1);
+//		grid.getEditor().editRow(personAddresses.size() - 1);
+		grid.getEditor().editRow(tmpAddresses.size() - 1);
 		txfPostbox.focus();
 	}
 

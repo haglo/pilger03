@@ -71,8 +71,8 @@ public class Person extends Superclass implements Serializable {
 	public void updateAddress(Address address) {
 		for (Address entry : addresses) {
 			if (entry.getUuid().equals(address.getUuid())) {
-				entry.setPerson(this);
 				getAddresses().remove(entry);
+				entry.setPerson(this);
 				getAddresses().add(entry);
 			}
 		}
