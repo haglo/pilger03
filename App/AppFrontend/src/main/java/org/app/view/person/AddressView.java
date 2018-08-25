@@ -156,6 +156,7 @@ public class AddressView extends VerticalLayout {
 	public void resetGrid() {
 		saveModus = SaveModus.UPDATE;
 		addressDataProvider.refreshAll();
+		grid.setDataProvider(addressDataProvider);
 	}
 
 }
