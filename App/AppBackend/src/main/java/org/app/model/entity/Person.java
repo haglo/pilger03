@@ -17,7 +17,9 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@NamedQueries({ @NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") })
+@NamedQueries({ 
+	@NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") 
+	})
 public class Person extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;

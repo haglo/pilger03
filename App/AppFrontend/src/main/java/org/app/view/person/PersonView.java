@@ -173,29 +173,11 @@ public class PersonView extends VerticalLayout implements View {
 	}
 
 	private void showAddresses(Person selectedPerson) {
-
-		try {
-			if (addressView.isAttached()) {
-				removeComponent(addressView);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		addressView = new AddressView(selectedPerson, personService);
 		addressCommunicationContent.addComponent(addressView);
 	}
 
 	private void showCommunication(Person selectedPerson) {
-
-		try {
-			if (communicationView.isAttached()) {
-				removeComponent(communicationView);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		communicationView = new CommunicationView(selectedPerson, personService);
 		addressCommunicationContent.addComponent(communicationView);
 	}
