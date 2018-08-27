@@ -27,8 +27,8 @@ public class TitleBean implements TitleDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
-	private static final Logger LOG =   LoggerFactory.getLogger("DB");
+
+	private Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
 
 	@Override
 	public Title create(Title title) {
@@ -79,8 +79,7 @@ public class TitleBean implements TitleDAO {
 				.add(AuditEntity.id().eq(id)).getResultList();
 
 		for (Object[] revData : revDatas) {
-			listAuditedEntities.add(
-					new Title_AUD((Title) revData[0], (RevInfo) revData[1], (RevisionType) revData[2]));
+			listAuditedEntities.add(new Title_AUD((Title) revData[0], (RevInfo) revData[1], (RevisionType) revData[2]));
 		}
 		return listAuditedEntities;
 

@@ -63,7 +63,6 @@ public class PersonView extends VerticalLayout implements View {
 		saveModus = SaveModus.UPDATE;
 		setSizeFull();
 		setMargin(new MarginInfo(false, true, true, true));
-		setWidth("1200px");
 	}
 
 	@PostConstruct
