@@ -18,6 +18,8 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Stateless
 @Remote(TitleDAO.class)
@@ -25,6 +27,8 @@ public class TitleBean implements TitleDAO {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	private static final Logger LOG =   LoggerFactory.getLogger("DB");
 
 	@Override
 	public Title create(Title title) {
@@ -38,7 +42,9 @@ public class TitleBean implements TitleDAO {
 			return em.merge(title);
 		} finally {
 			em.flush();
+			LOG.info("MyLogMessage");
 		}
+
 	}
 
 	@Override
