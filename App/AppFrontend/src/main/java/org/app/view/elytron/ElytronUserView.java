@@ -1,4 +1,4 @@
-package org.app.view.account;
+package org.app.view.elytron;
 
 import java.util.Comparator;
 import java.util.EnumSet;

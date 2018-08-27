@@ -21,6 +21,8 @@ public class Account extends Superclass implements Serializable {
 
 	private String password;
 	
+	private String mailaddress;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -35,6 +37,14 @@ public class Account extends Superclass implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getMailaddress() {
+		return mailaddress;
+	}
+
+	public void setMailaddress(String mailaddress) {
+		this.mailaddress = mailaddress;
 	}
 
 }

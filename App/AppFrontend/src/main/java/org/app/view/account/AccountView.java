@@ -13,6 +13,7 @@ import org.app.model.entity.Account;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.MarginInfo;
@@ -23,6 +24,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,13 +36,16 @@ public class AccountView extends HorizontalLayout implements View {
 	@Inject
 	AccountService accountService;
 	
+	private I18n i18n;
 	private Account account;
+	private Account selectedAccount;
 	private Set<Account> selectedAccounts;
 	private TextField firstEntryField = new TextField();
 	private TextField txfPassword = new TextField();
 	private Grid<Account> grid;
 
 	public AccountView() {
+		i18n = new I18n();
 		setMargin(new MarginInfo(false, true, true, true));
 	}
 
@@ -52,7 +57,7 @@ public class AccountView extends HorizontalLayout implements View {
 		VerticalLayout content = new VerticalLayout();
 		selectedAccounts = new HashSet<>();
 		List<Account> accountList = accountService.findAll();
-		
+
 		DataProvider<Account, ?> dataProvider = DataProvider.ofCollection(accountList);
 		grid = new Grid<Account>();
 		grid.setSizeFull();
@@ -67,18 +72,31 @@ public class AccountView extends HorizontalLayout implements View {
 			updateRow(account);
 		});
 
-
 		grid.setDataProvider(dataProvider);
 		grid.addColumn(Account::getUsername).setCaption("Benutzername")
 				.setEditorComponent(firstEntryField, Account::setUsername).setId("Benutzername");
 		grid.addColumn(Account::getPassword).setCaption("Passwort").setEditorComponent(txfPassword,
 				Account::setPassword);
 
+		Button add = new Button("+");
+		add.addClickListener(event -> {
+			getUI().addWindow(new AccountNewView(this));
+		});
+
 		Button delete = new Button("-");
 		delete.addClickListener(event -> deleteRow());
 
+		Button detail = new Button("", ev -> {
+			if (onlyOneSelected(selectedAccounts)) {
+				for (Account entry : selectedAccounts) {
+					selectedAccount = entry;
+					getUI().addWindow(new AccountDetailView(this, selectedAccount));
+				}
+			}
+		});
+		detail.setIcon(VaadinIcons.PENCIL);
 
-		CssLayout accountNavBar = new CssLayout(delete);
+		CssLayout accountNavBar = new CssLayout(add, delete, detail);
 		accountNavBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		content.addComponent(grid);
 		content.addComponent(accountNavBar);
@@ -111,4 +129,17 @@ public class AccountView extends HorizontalLayout implements View {
 		return accountService;
 	}
 
+	private boolean onlyOneSelected(Set<Account> selected) {
+		boolean isCorrect = true;
+		if (selected.size() > 1) {
+			Notification.show(i18n.NOTIFICATION_ONLY_ONE_ITEM);
+			isCorrect = false;
+		}
+		if (selected.size() < 1) {
+			Notification.show(i18n.NOTIFICATION_EXACT_ONE_ITEM);
+			isCorrect = false;
+		}
+		return isCorrect;
+
+}
 }
