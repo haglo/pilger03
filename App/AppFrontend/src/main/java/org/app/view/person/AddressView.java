@@ -1,13 +1,8 @@
 package org.app.view.person;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import org.app.controler.PersonService;
 import org.app.helper.I18n;
 import org.app.model.dao.PersonDAO;
@@ -20,7 +15,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -37,7 +31,6 @@ public class AddressView extends VerticalLayout {
 	private ListDataProvider<Address> addressDataProvider;
 	private Address selectedAddress;
 	private Set<Address> selectedAddresses;
-	private Set<Address> personAddresses;
 
 	private SaveModus saveModus;
 	private TextField txfStreet = new TextField();
@@ -55,10 +48,7 @@ public class AddressView extends VerticalLayout {
 		this.selectedAddresses = new HashSet<Address>();
 
 		i18n = new I18n();
-		personAddresses = new LinkedHashSet<Address>();
-		personAddresses = selectedPerson.getAddresses();
-
-		addressDataProvider = DataProvider.ofCollection(personAddresses);
+		addressDataProvider = DataProvider.ofCollection(selectedPerson.getAddresses());
 		grid = new Grid<Address>();
 		grid.setSizeFull();
 		grid.setSelectionMode(SelectionMode.MULTI);
@@ -73,24 +63,23 @@ public class AddressView extends VerticalLayout {
 			selectedAddress = new Address();
 			selectedAddress = event.getBean();
 			if (saveModus == SaveModus.UPDATE) {
+				selectedAddress.setPerson(selectedPerson);
 				selectedPerson.updateAddress(selectedAddress);
-				personDAO.update(selectedPerson);
-				resetGrid();
+				selectedPerson = personDAO.update(selectedPerson);
+				resetGrid(selectedPerson);
 			}
 			if (saveModus == SaveModus.NEW) {
 				selectedAddress.setPerson(selectedPerson);
-				personAddresses.add(selectedAddress);
-				selectedPerson.setAddresses(personAddresses);
-				personDAO.update(selectedPerson);
-//				personDAO.addAddress(selectedAddress, selectedPerson);
-//				service.addAddress(selectedAddress, selectedPerson);
-				resetGrid();
+				selectedPerson.getAddresses().add(selectedAddress);
+				selectedPerson.setAddresses(selectedPerson.getAddresses());
+				selectedPerson = personDAO.update(selectedPerson);
+				resetGrid(selectedPerson);
 			}
 		});
 
 		grid.getEditor().addCancelListener(event -> {
 			if (saveModus == SaveModus.NEW) {
-				resetGrid();
+				resetGrid(selectedPerson);
 			}
 		});
 
@@ -103,8 +92,8 @@ public class AddressView extends VerticalLayout {
 				Address::setZip);
 		grid.addColumn(address -> address.getCity()).setCaption(i18n.PERSON_CITY).setEditorComponent(txfCity,
 				Address::setCity);
-//		grid.addColumn(address -> address.getComment()).setCaption(i18n.BASIC_COMMENT).setEditorComponent(txfComment,
-//				Address::setComment);
+		grid.addColumn(address -> address.getComment()).setCaption(i18n.BASIC_COMMENT).setEditorComponent(txfComment,
+				Address::setComment);
 
 		Button add = new Button("+");
 		add.addClickListener(event -> addRow());
@@ -123,16 +112,11 @@ public class AddressView extends VerticalLayout {
 		saveModus = SaveModus.NEW;
 		Address newAddress = new Address();
 		newAddress.setPerson(selectedPerson);
-		Set tmpAddresses = new LinkedHashSet<Address>();
+		Set<Address> tmpAddresses = new LinkedHashSet<Address>();
 		tmpAddresses = selectedPerson.getAddresses();
 		tmpAddresses.add(newAddress);
 		grid.setItems(tmpAddresses);
-		
-//		personAddresses.add(newAddress);
-//		addressDataProvider.refreshAll();
-		
 		grid.sort(i18n.BASIC_ID, SortDirection.ASCENDING);
-//		grid.getEditor().editRow(personAddresses.size() - 1);
 		grid.getEditor().editRow(tmpAddresses.size() - 1);
 		txfPostbox.focus();
 	}
@@ -145,18 +129,17 @@ public class AddressView extends VerticalLayout {
 		for (Address entityItem : selectedAddresses) {
 			selectedPerson.removeAddress(entityItem);
 		}
-		personDAO.update(selectedPerson);
-		resetGrid();
+		selectedPerson = personDAO.update(selectedPerson);
+		resetGrid(selectedPerson);
 	}
 
 	private enum SaveModus {
 		NEW, UPDATE
 	}
 
-	public void resetGrid() {
+	public void resetGrid(Person person) {
 		saveModus = SaveModus.UPDATE;
-		addressDataProvider.refreshAll();
-		grid.setDataProvider(addressDataProvider);
+		grid.setItems(person.getAddresses());
 	}
 
 }

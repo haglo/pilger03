@@ -17,9 +17,7 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@NamedQueries({ 
-	@NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") 
-	})
+@NamedQueries({ @NamedQuery(name = Person.QUERY_GET_ALL, query = "SELECT c FROM Person c") })
 public class Person extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -71,10 +69,10 @@ public class Person extends Superclass implements Serializable {
 	}
 
 	public void updateAddress(Address address) {
+		address.setPerson(this);
 		for (Address entry : addresses) {
 			if (entry.getUuid().equals(address.getUuid())) {
 				getAddresses().remove(entry);
-				entry.setPerson(this);
 				getAddresses().add(entry);
 			}
 		}
@@ -89,8 +87,8 @@ public class Person extends Superclass implements Serializable {
 	}
 
 	public void addCommunication(Communication communication) {
-		communications.add(communication);
 		communication.setPerson(this);
+		communications.add(communication);
 	}
 
 	public void removeCommunication(Communication communication) {

@@ -49,7 +49,6 @@ public class PersonBean implements PersonDAO {
 	public Person create(Person person) {
 		em.persist(person);
 		em.flush();
-//		em.refresh(person);
 		return person;
 	}
 
@@ -59,7 +58,6 @@ public class PersonBean implements PersonDAO {
 	public Person update(Person person) {
 		person = em.merge(person);
 		em.flush();
-		em.refresh(person);
 		return person;
 	}
 
@@ -98,11 +96,4 @@ public class PersonBean implements PersonDAO {
 
 	}
 	
-	@Override
-	public void addAddress(Address address, Person person) {
-		address.setPerson(person);
-		person.getAddresses().add(address);
-		addressDAO.update(address);
-	}
-
 }
