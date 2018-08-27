@@ -70,12 +70,8 @@ public class Person extends Superclass implements Serializable {
 
 	public void updateAddress(Address address) {
 		address.setPerson(this);
-		for (Address entry : addresses) {
-			if (entry.getUuid().equals(address.getUuid())) {
-				getAddresses().remove(entry);
-				getAddresses().add(entry);
-			}
-		}
+		getAddresses().remove(address);
+		getAddresses().add(address);
 	}
 
 	public Set<Communication> getCommunications() {
