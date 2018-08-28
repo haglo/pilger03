@@ -37,8 +37,7 @@ public class RevInfo implements Serializable {
 	@RevisionTimestamp
 	private long timestamp;
 
-	private Integer userId;
-	
+
 	/**
 	 * Einbinden: Entity ElytronUser
 	 */
@@ -71,14 +70,6 @@ public class RevInfo implements Serializable {
 
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public ElytronUser getElytronUser() {

@@ -112,6 +112,7 @@ public class AuthService {
 		if (validUser == true && validPassword == true && validElytronUser == true) {
 			authentic = true;
 		}
+
 		return authentic;
 	}
 

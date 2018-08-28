@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 
-import org.app.model.audit.LoggedInUser;
+import org.app.model.audit.ElytronUserSessionScoped;
 import org.app.model.dao.ElytronUserDAO;
 import org.app.model.entity.ElytronUser;
 

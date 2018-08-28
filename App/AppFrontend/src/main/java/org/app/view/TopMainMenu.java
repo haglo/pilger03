@@ -1,46 +1,49 @@
 package org.app.view;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.ServletException;
 
+import org.app.controler.SessionService;
 import org.app.helper.I18n;
-
-import com.vaadin.cdi.CDIView;
-import com.vaadin.cdi.UIScoped;
 import com.vaadin.cdi.access.JaasAccessControl;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
-
+import javax.annotation.security.DeclareRoles;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
+@DeclareRoles({ I18n.ROLE_SYSTEM, I18n.ROLE_POWERUSER, I18n.ROLE_ADMINISTRATOR, I18n.ROLE_USER, I18n.ROLE_GUEST })
 public class TopMainMenu extends CustomComponent {
 
 	private Button logOutButton;
 	private JaasAccessControl accessControl;
+	private VaadinRequest request;
 
 	public TopMainMenu() {
 
 	}
+
 	public TopMainMenu(JaasAccessControl ac) {
 		accessControl = new JaasAccessControl();
 		accessControl = ac;
+		request = VaadinRequest.getCurrent();
 		setupLayout();
 	}
 
 	Button personViewButton = new Button("Addresses", e -> UI.getCurrent().getNavigator().navigateTo(I18n.PERSON_VIEW));
 
-	Button masterDetailViewButton = new Button("Stammdaten", e -> UI.getCurrent().getNavigator().navigateTo(I18n.MASTER_DETAIL_VIEW));
+	Button masterDetailViewButton = new Button("Stammdaten",
+			e -> UI.getCurrent().getNavigator().navigateTo(I18n.MASTER_DETAIL_VIEW));
 
 	Button accountViewButton = new Button("Accounts",
 			e -> UI.getCurrent().getNavigator().navigateTo(I18n.ACCOUNT_VIEW));
 
-	Button userViewButton = new Button("Users",
-			e -> UI.getCurrent().getNavigator().navigateTo(I18n.ELYTRON_USER_VIEW));
+	Button userViewButton = new Button("Users", e -> UI.getCurrent().getNavigator().navigateTo(I18n.ELYTRON_USER_VIEW));
 
 	Button helpViewButton = new Button("Help", e -> UI.getCurrent().getNavigator().navigateTo(I18n.HELP_VIEW));
 
@@ -81,8 +84,12 @@ public class TopMainMenu extends CustomComponent {
 		layout.addComponent(masterDetailViewButton);
 		layout.addComponent(accountViewButton);
 		layout.addComponent(userViewButton);
-		layout.addComponent(helpViewButton);
+
+		if (accessControl.isUserInRole(I18n.ROLE_SYSTEM) &&accessControl.isUserInRole(I18n.ROLE_POWERUSER)) {
+			layout.addComponent(helpViewButton);
+		}
+
 		layout.addComponent(logoutButton());
-		setCompositionRoot(layout);		
+		setCompositionRoot(layout);
 	}
 }

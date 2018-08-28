@@ -31,12 +31,6 @@ public class TitleAuditView extends Window {
 		grid.setSizeFull();
 		grid.setSelectionMode(SelectionMode.MULTI);
 
-
-		grid.addColumn(aud -> {
-			String result = "" + aud.getRevision().getRevisionDate();
-			return result;
-		}).setCaption("Datum");
-		
 		grid.addColumn(aud -> {
 			String result = "" + aud.getReventity().getListPrio();
 			return result;
@@ -48,15 +42,15 @@ public class TitleAuditView extends Window {
 		}).setCaption("Titel");
 
 		grid.addColumn(aud -> {
-			String result = "" + aud.getRevision().getUserId();
+			String result = "" + aud.getRevision().getRevisionDate();
 			return result;
-		}).setCaption("Benutzer ID");
+		}).setCaption("Datum");
 
 		grid.addColumn(aud -> {
 			String result = "" + aud.getRevision().getElytronUser().getUsername();
 			return result;
 		}).setCaption("Benutzer Name");
- 
+
 		grid.addColumn(aud -> {
 			String result = "" + aud.getRevType();
 			return result;

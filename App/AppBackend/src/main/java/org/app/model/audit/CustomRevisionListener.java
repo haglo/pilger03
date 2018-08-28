@@ -12,32 +12,21 @@ import org.hibernate.envers.RevisionListener;
 public class CustomRevisionListener implements RevisionListener, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private LoggedInUser userBean;
+	private ElytronUserSessionScoped userBean;
 
 	public void newRevision(Object revisionEntity) {
-//		setUserBean(3);
 		userBean = getUserBean();
 		RevInfo rev = (RevInfo) revisionEntity;
-		rev.setUserId(userBean.getCurrentUserID());
 		rev.setElytronUser(userBean.getElytronUser());
-
 	}
 
-//	@SuppressWarnings("unchecked")
-//	private void setUserBean(Integer id) {
-//		BeanManager beanManager = CDI.current().getBeanManager();
-//		Bean<LoggedInUser> bean = ((Bean<LoggedInUser>) beanManager.getBeans(LoggedInUser.class).iterator().next());
-//		CreationalContext<LoggedInUser> context = beanManager.createCreationalContext(bean);
-//		userBean = (LoggedInUser) beanManager.getReference(bean, LoggedInUser.class, context);
-//		userBean.setCurrentUserID(id);
-//	}
 	
 	@SuppressWarnings("unchecked")
-	private LoggedInUser getUserBean() {
+	private ElytronUserSessionScoped getUserBean() {
 		BeanManager beanManager = CDI.current().getBeanManager();
-		Bean<LoggedInUser> bean = ((Bean<LoggedInUser>) beanManager.getBeans(LoggedInUser.class).iterator().next());
-		CreationalContext<LoggedInUser> context = beanManager.createCreationalContext(bean);
-		userBean = (LoggedInUser) beanManager.getReference(bean, LoggedInUser.class, context);
+		Bean<ElytronUserSessionScoped> bean = ((Bean<ElytronUserSessionScoped>) beanManager.getBeans(ElytronUserSessionScoped.class).iterator().next());
+		CreationalContext<ElytronUserSessionScoped> context = beanManager.createCreationalContext(bean);
+		userBean = (ElytronUserSessionScoped) beanManager.getReference(bean, ElytronUserSessionScoped.class, context);
 		return userBean;
 	}
 
