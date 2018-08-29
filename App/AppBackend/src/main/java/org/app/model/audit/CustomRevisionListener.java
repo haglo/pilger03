@@ -12,7 +12,7 @@ import org.hibernate.envers.RevisionListener;
 public class CustomRevisionListener implements RevisionListener, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private ElytronUserSessionScoped userBean;
+	private LoggedInUser userBean;
 
 	public void newRevision(Object revisionEntity) {
 		userBean = getUserBean();
@@ -22,11 +22,11 @@ public class CustomRevisionListener implements RevisionListener, Serializable {
 
 	
 	@SuppressWarnings("unchecked")
-	private ElytronUserSessionScoped getUserBean() {
+	private LoggedInUser getUserBean() {
 		BeanManager beanManager = CDI.current().getBeanManager();
-		Bean<ElytronUserSessionScoped> bean = ((Bean<ElytronUserSessionScoped>) beanManager.getBeans(ElytronUserSessionScoped.class).iterator().next());
-		CreationalContext<ElytronUserSessionScoped> context = beanManager.createCreationalContext(bean);
-		userBean = (ElytronUserSessionScoped) beanManager.getReference(bean, ElytronUserSessionScoped.class, context);
+		Bean<LoggedInUser> bean = ((Bean<LoggedInUser>) beanManager.getBeans(LoggedInUser.class).iterator().next());
+		CreationalContext<LoggedInUser> context = beanManager.createCreationalContext(bean);
+		userBean = (LoggedInUser) beanManager.getReference(bean, LoggedInUser.class, context);
 		return userBean;
 	}
 

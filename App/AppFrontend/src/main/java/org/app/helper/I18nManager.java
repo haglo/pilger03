@@ -78,29 +78,3 @@ public class I18nManager {
         }
     }
 }
-
-//public class I18nManager implements Serializable {
-//
-//	  private static final long serialVersionUID = 1L;
-//	  protected ResourceBundle messages;
-//	  
-//	  public String getMessage(String key) {
-//	    if (messages == null) {
-//	      createResourceBundle();
-//	    }
-//	    return messages.getString(key);
-//	  }
-//
-//	  public String getMessage(String key, Object... arguments) {
-//	    if (messages == null) {
-//	      createResourceBundle();
-//	    }
-//	    return MessageFormat.format(messages.getString(key), arguments);
-//	  }
-//	  
-//	  public void createResourceBundle() {
-//	    Locale locale = ExplorerApp.get().getLocale();
-//	    this.messages = ResourceBundle.getBundle(Constants.RESOURCE_BUNDLE, locale);
-//	  }
-//	  
-//	}

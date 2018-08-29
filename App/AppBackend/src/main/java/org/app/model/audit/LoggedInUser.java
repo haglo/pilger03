@@ -7,7 +7,7 @@ import org.app.model.entity.ElytronUser;
 
 @Stateful
 @SessionScoped
-public class ElytronUserSessionScoped  {
+public class LoggedInUser  {
 
 	private ElytronUser elytronUser;
 	

@@ -1,23 +1,30 @@
 package org.app.view.help;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.app.helper.I18n;
+import org.app.view.MainUI;
+
 import com.vaadin.cdi.CDIView;
 import com.vaadin.cdi.UIScoped;
+import com.vaadin.cdi.access.JaasAccessControl;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 @CDIView(I18n.HELP_VIEW)
 @UIScoped
 public class HelpView extends HorizontalLayout implements View {
 
+	@Inject
+	JaasAccessControl accessControl;
 
 	public HelpView() {
 		setMargin(new MarginInfo(false, true, true, true));
@@ -27,14 +34,18 @@ public class HelpView extends HorizontalLayout implements View {
 	void init() {
 		setSizeFull();
 		setWidth("1000px");
-
+ 
 		VerticalLayout content = new VerticalLayout();
-		final HorizontalLayout navigationBar = new HorizontalLayout();
-		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
+		Label username = new Label("Elytronuser: " +accessControl.getPrincipalName());
+		Label loc = new Label("Lokale: " +((MainUI) UI.getCurrent()).getLocale());
+		Label theme = new Label("Theme: " +((MainUI) UI.getCurrent()).getTheme());
+		
 		content.addComponent(headingLabel());
 		content.addComponent(someText());
-		content.addComponent(navigationBar);
+		content.addComponent(username);
+		content.addComponent(loc);
+		content.addComponent(theme);
 		addComponent(content);
 		setDefaultComponentAlignment(Alignment.TOP_CENTER);
 	}
@@ -48,7 +59,5 @@ public class HelpView extends HorizontalLayout implements View {
 		label.setContentMode(ContentMode.HTML);
 		return label;
 	}
-
-
 
 }

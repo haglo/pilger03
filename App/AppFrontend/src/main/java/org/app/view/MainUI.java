@@ -2,18 +2,17 @@ package org.app.view;
 
 import java.util.Locale;
 import java.util.Optional;
+
 import javax.inject.Inject;
+
 import org.app.controler.ElytronUserService;
 import org.app.controler.SessionService;
 import org.app.helper.I18n;
-import org.app.view.help.HelpView;
 import org.app.view.login.LoginView;
-import org.app.view.person.PersonView;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.cdi.CDIViewProvider;
-import com.vaadin.cdi.access.AccessControl;
 import com.vaadin.cdi.access.JaasAccessControl;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
@@ -37,7 +36,7 @@ public class MainUI extends UI {
 
 	@Inject
 	ElytronUserService elytronUserService;
-	
+
 	@Inject
 	SessionService sessionService;
 
@@ -45,9 +44,7 @@ public class MainUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		System.setProperty("java.security.auth.login.config", "jaas.config");
 		if (accessControl.isUserSignedIn()) {
-			sessionService.setCurrentUser(elytronUserService.getElytronUserDAO().findByName(accessControl.getPrincipalName()));
 			setupMainLayout();
 		} else {
 			setContent(loginView);
@@ -78,6 +75,8 @@ public class MainUI extends UI {
 		mainLayout.setExpandRatio(contentView, 0.90f);
 
 		mainLayout.setSizeFull();
+		setTheme(I18n.getElytronTheme(elytronUserService.getLoggedInUser().getDefaultTheme()));
+		setLocale(I18n.getElytronLocale(elytronUserService.getLoggedInUser().getDefaultLanguage()));
 
 		setContent(mainLayout);
 
@@ -90,23 +89,23 @@ public class MainUI extends UI {
 		navigator.navigateTo(initialState);
 	}
 
-	@Override
-	public void setLocale(Locale locale) {
-		super.setLocale(locale);
-	}
+//	@Override
+//	public void setLocale(Locale locale) {
+//		super.setLocale(locale);
+//	}
+//
+//	@Override
+//	public Locale getLocale() {
+//		return super.getLocale();
+//	}
 
-
-	@Override
-	public Locale getLocale() {
-		return super.getLocale();
-	}
-
-	public void setTheme(String theme) {
-		super.setTheme(theme);
-	}
-
-	public AccessControl getAccessControl() {
-		return accessControl;
-	}
-
+//	@Override
+//	public void setTheme(String theme) {
+//		super.setTheme(theme);
+//	}
+//
+//	@Override
+//	public String getTheme() {
+//		return super.getTheme();
+//	}
 }

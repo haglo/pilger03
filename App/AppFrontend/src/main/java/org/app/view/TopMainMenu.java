@@ -46,6 +46,9 @@ public class TopMainMenu extends CustomComponent {
 	Button userViewButton = new Button("Users", e -> UI.getCurrent().getNavigator().navigateTo(I18n.ELYTRON_USER_VIEW));
 
 	Button helpViewButton = new Button("Help", e -> UI.getCurrent().getNavigator().navigateTo(I18n.HELP_VIEW));
+	
+	Button settingsViewButton = new Button(I18n.SETTINGS_VIEW,
+			e -> UI.getCurrent().getNavigator().navigateTo(I18n.SETTINGS_VIEW));
 
 	private Button logoutButton() {
 		logOutButton = new Button("Logout", new Button.ClickListener() {
@@ -79,16 +82,23 @@ public class TopMainMenu extends CustomComponent {
 		userViewButton.addStyleName("icon-align-top");
 		helpViewButton.setIcon(VaadinIcons.QUESTION);
 		helpViewButton.addStyleName("icon-align-top");
+		settingsViewButton.setIcon(VaadinIcons.COGS);
+		settingsViewButton.addStyleName("icon-align-top");
+		settingsViewButton.setIcon(VaadinIcons.COGS);
+		settingsViewButton.addStyleName("icon-align-top");
 
 		layout.addComponent(personViewButton);
 		layout.addComponent(masterDetailViewButton);
 		layout.addComponent(accountViewButton);
 		layout.addComponent(userViewButton);
 
-		if (accessControl.isUserInRole(I18n.ROLE_SYSTEM) || accessControl.isUserInRole(I18n.ROLE_POWERUSER)) {
-			layout.addComponent(helpViewButton);
-		}
+//		if (accessControl.isUserInRole(I18n.ROLE_SYSTEM) || accessControl.isUserInRole(I18n.ROLE_POWERUSER)) {
+//			layout.addComponent(helpViewButton);
+//		}
 
+		layout.addComponent(helpViewButton);
+
+		layout.addComponent(settingsViewButton);
 		layout.addComponent(logoutButton());
 		setCompositionRoot(layout);
 	}

@@ -5,10 +5,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+
 import org.app.controler.AccountService;
 import org.app.controler.ElytronUserService;
-import org.app.controler.SessionService;
 import org.app.helper.I18n;
+import org.app.model.audit.LoggedInUser;
 import org.app.model.dao.ElytronRoleDAO;
 import org.app.model.entity.Account;
 import org.app.model.entity.ElytronUser;
@@ -26,7 +27,7 @@ public class AuthService {
 	private ElytronUserService elytronUserService;
 
 	@Inject
-	private SessionService sessionService;
+	LoggedInUser loggedInUser;
 
 	@Inject
 	private EncryptService encryptService;
@@ -58,7 +59,6 @@ public class AuthService {
 		return authentic;
 	}
 
-	
 	private boolean validateLoginUser(String username) {
 		account = new Account();
 
@@ -73,7 +73,6 @@ public class AuthService {
 
 	private boolean validateLoginPassword(String password) {
 
-//		if (password.equals(account.getPassword())) {
 		if (encryptService.getEncoder().matches(password, account.getPassword())) {
 			return true;
 		} else {
@@ -92,12 +91,14 @@ public class AuthService {
 		List<ElytronUser> elytronUserList = elytronUserService.getElytronUserDAO().findAll();
 		for (ElytronUser entry : elytronUserList) {
 			if (entry.getUsername().equals(username)) {
+				elytronUser = entry;
 				elytronUserExists = true;
+
 			}
 		}
 
 		if (elytronUserExists) {
-			sessionService.setCurrentUser(elytronUser);
+			loggedInUser.setElytronUser(elytronUser);
 			result = true;
 		}
 
@@ -111,9 +112,9 @@ public class AuthService {
 				elytronUser.setElytronRole(nutElytronUser.getElytronRole());
 				elytronUser.setDefaultLanguage(nutElytronUser.getDefaultLanguage());
 				elytronUser.setDefaultTheme(nutElytronUser.getDefaultTheme());
-
 				elytronUserService.getElytronUserDAO().create(elytronUser);
-				sessionService.setCurrentUser(elytronUser);
+
+				loggedInUser.setElytronUser(elytronUser);
 				result = true;
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -123,10 +124,8 @@ public class AuthService {
 		return result;
 	}
 
-
 	public String getMessageForAuthentication() {
 		return MessageForAuthentication;
 	}
-
 
 }

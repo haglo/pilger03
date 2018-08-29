@@ -5,8 +5,9 @@ import java.io.Serializable;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
-import org.app.model.audit.ElytronUserSessionScoped;
+import org.app.model.audit.LoggedInUser;
 import org.app.model.dao.ElytronUserDAO;
 import org.app.model.entity.ElytronUser;
 
@@ -22,6 +23,9 @@ public class ElytronUserService implements Serializable {
 
 	@EJB
 	private ElytronUserDAO elytronUserDAO;
+	
+	@Inject 
+	LoggedInUser loggedInUser;
 
 	private boolean isEditing = false;
 
@@ -40,5 +44,9 @@ public class ElytronUserService implements Serializable {
 	
 	public ElytronUserDAO getElytronUserDAO() {
 		return elytronUserDAO;
+	}
+	
+	public ElytronUser getLoggedInUser() {
+		return loggedInUser.getElytronUser();
 	}
 }

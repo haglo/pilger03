@@ -1,5 +1,12 @@
 package org.app.helper;
 
+import java.util.List;
+import java.util.Locale;
+
+import org.app.model.entity.Settings;
+import org.app.model.entity.enums.DefaultLanguage;
+import org.app.model.entity.enums.DefaultTheme;
+
 public final class I18n {
 
 	private static I18n instance;
@@ -23,11 +30,10 @@ public final class I18n {
 	public static final String ROLE_USER = "User";
 	public static final String ROLE_GUEST = "Guest";
 	public static final String ELYTRON_PASSWORD = "secret01"; // Default-Password given in Entity ElytronUser.java
-	
+
 	public static String MIN_WIDTH;
 
 	public String BASIC_ID = "ID";
-	
 
 	public String BASIC_EDIT = i18m.getMessage("basic.edit");
 	public String BASIC_SAVE = i18m.getMessage("basic.save");
@@ -93,6 +99,42 @@ public final class I18n {
 			instance = new I18n();
 		}
 		return instance;
+	}
+
+	public static Locale getElytronLocale(DefaultLanguage entry) {
+		switch (entry) {
+		case english:
+			return Locale.ENGLISH;
+		case german:
+			return Locale.GERMAN;
+		default:
+			return Locale.ENGLISH;
+		}
+	}
+
+	public static String getElytronTheme(DefaultTheme entry) {
+		switch (entry) {
+		case Standard:
+			return "appui";
+		case Default:
+			return "default";
+		case Medjugorje:
+			return "blueprint";
+		case Jugend2000:
+			return "facebook";
+		case Dark:
+			return "dark";
+		case Flat:
+			return "flat";
+		case FlatDark:
+			return "flatdark";
+		case Light:
+			return "light";
+		case Metro:
+			return "metro";
+		default:
+			return "appui";
+		}
 	}
 
 }
