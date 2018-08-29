@@ -1,4 +1,4 @@
-package org.app.controler.jaas;
+package org.app.view.login;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

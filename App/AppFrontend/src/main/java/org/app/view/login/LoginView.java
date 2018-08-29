@@ -3,7 +3,6 @@ package org.app.view.login;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.app.controler.jaas.AuthService;
 import org.app.helper.I18n;
 import com.vaadin.cdi.CDIView;
 import com.vaadin.cdi.UIScoped;
@@ -19,6 +18,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+
 
 
 @SuppressWarnings("serial")
@@ -56,12 +56,12 @@ public class LoginView extends VerticalLayout implements View {
 
 		loginButton = new Button("Login", event -> {
 			try {
-				if (preAuthentication(username.getValue(), password.getValue())) {
-					JaasAccessControl.login(username.getValue(), password.getValue());
-					Notification.show(authService.getMessageForAuthentication());
+				if (firstAuthentication(username.getValue(), password.getValue())) {
+					JaasAccessControl.login(username.getValue(), I18n.ELYTRON_PASSWORD);
 					Page page = Page.getCurrent();
 					page.reload();					
 				}
+				Notification.show(authService.getMessageForAuthentication());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -77,8 +77,9 @@ public class LoginView extends VerticalLayout implements View {
 		return loginForm;
 	}
 	
-	private boolean preAuthentication(String username, String password) {
+	private boolean firstAuthentication(String username, String password) {
 		return authService.validateAuthenticationValues(username, password);
 	}
+	
 
 }

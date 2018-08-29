@@ -22,6 +22,7 @@ public final class I18n {
 	public static final String ROLE_ADMINISTRATOR = "Administrator";
 	public static final String ROLE_USER = "User";
 	public static final String ROLE_GUEST = "Guest";
+	public static final String ELYTRON_PASSWORD = "secret01"; // Default-Password given in Entity ElytronUser.java
 	
 	public static String MIN_WIDTH;
 

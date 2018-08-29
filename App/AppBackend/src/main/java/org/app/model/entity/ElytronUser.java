@@ -13,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import org.app.model.entity.enums.DefaultLanguage;
 import org.app.model.entity.enums.DefaultTheme;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @NamedQueries({ 
@@ -30,6 +31,8 @@ public class ElytronUser extends Superclass implements Serializable {
 
 	@Column(unique = true)
 	private String username;
+	
+	private String password;
 
 	/**
 	 * Einbinden: Entity Role über ComboBox
@@ -56,6 +59,14 @@ public class ElytronUser extends Superclass implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public ElytronRole getElytronRole() {

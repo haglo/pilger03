@@ -1,6 +1,8 @@
 package org.app.model.entity;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -17,6 +19,7 @@ public class Account extends Superclass implements Serializable {
 	public static final String QUERY_FIND_ALL = "Account.FindAll";
 	public static final String QUERY_FIND_BY_USERNAME = "Account.FindByUserName";
 
+	@Column(unique = true)
 	private String username;
 
 	private String password;

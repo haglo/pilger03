@@ -85,7 +85,7 @@ public class TopMainMenu extends CustomComponent {
 		layout.addComponent(accountViewButton);
 		layout.addComponent(userViewButton);
 
-		if (accessControl.isUserInRole(I18n.ROLE_SYSTEM) &&accessControl.isUserInRole(I18n.ROLE_POWERUSER)) {
+		if (accessControl.isUserInRole(I18n.ROLE_SYSTEM) || accessControl.isUserInRole(I18n.ROLE_POWERUSER)) {
 			layout.addComponent(helpViewButton);
 		}
 

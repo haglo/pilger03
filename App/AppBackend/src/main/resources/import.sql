@@ -1,7 +1,7 @@
-insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin1', 'secret1');
-insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin2', 'secret2');
-insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin3', 'secret3');
-insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin4', 'secret4');
+insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin1', '$2a$10$Al3jAZHUr/uEBKER3D0MnO/gjJn3OtfOjWihKjyf8jNIsuPyYchcm');
+insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin2', '$2a$10$lL/TPkN701P4KsV3LeBUOO/kquf3O/euqM1.bS6XnF0V.TBadYaVK');
+insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin3', '$2a$10$.25Z2HJMNBBeADfKSJHqaOwCDBFNQMRyr9nGL//ZjCtq0AUu0dmNe');
+insert into pilgerdb.account (uuid, username, password) values (uuid_v4(), 'Admin4', '$2a$10$RGKIm3pG/dzL.yqeUy0iauEaQTRmARHMbSq9A8PrrJFK9AMJnug0y');
 
 insert into pilgerdb.elytronrole (id, uuid, rolename) values (1,  uuid_v4(), 'System');
 insert into pilgerdb.elytronrole (id, uuid, rolename) values (2,  uuid_v4(), 'Poweruser');
@@ -9,9 +9,9 @@ insert into pilgerdb.elytronrole (id, uuid, rolename) values (3,  uuid_v4(), 'Ad
 insert into pilgerdb.elytronrole (id, uuid, rolename) values (4,  uuid_v4(), 'User');
 insert into pilgerdb.elytronrole (id, uuid, rolename) values (5,  uuid_v4(), 'Guest');
 
-insert into pilgerdb.elytronuser (uuid, username, elytron_role_id, comment, defaultLanguage, defaultTheme ) values (uuid_v4(), 'N-U-T', 3, 'New-User-Template', 'english', 'Default');
-insert into pilgerdb.elytronuser (uuid, username, elytron_role_id) values (uuid_v4(), 'Admin1', 1);
-insert into pilgerdb.elytronuser (uuid, username, elytron_role_id) values (uuid_v4(), 'Admin2', 3);
+insert into pilgerdb.elytronuser (uuid, username, password, elytron_role_id, comment, defaultLanguage, defaultTheme ) values (uuid_v4(), 'N-U-T', 3, 'New-User-Template', 'secret01', 'english', 'Default');
+insert into pilgerdb.elytronuser (uuid, username, password, elytron_role_id) values (uuid_v4(), 'Admin1', 'secret01', 1);
+insert into pilgerdb.elytronuser (uuid, username, password, elytron_role_id) values (uuid_v4(), 'Admin2', 'secret01', 3);
 
 insert into pilgerdb.person (uuid, firstname, lastname) values (uuid_v4(), 'Hans-Georg', 'Glöckler1');
 insert into pilgerdb.person (uuid, firstname, lastname) values (uuid_v4(), 'Alfred', 'Lautwein');
