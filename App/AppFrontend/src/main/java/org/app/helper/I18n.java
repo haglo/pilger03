@@ -1,9 +1,6 @@
 package org.app.helper;
 
-import java.util.List;
 import java.util.Locale;
-
-import org.app.model.entity.Settings;
 import org.app.model.entity.enums.DefaultLanguage;
 import org.app.model.entity.enums.DefaultTheme;
 
@@ -30,8 +27,7 @@ public final class I18n {
 	public static final String ROLE_USER = "User";
 	public static final String ROLE_GUEST = "Guest";
 	public static final String ELYTRON_PASSWORD = "secret01"; // Default-Password given in Entity ElytronUser.java
-
-	public static String MIN_WIDTH;
+	public static String WINDOW_WIDTH = "";
 
 	public String BASIC_ID = "ID";
 

@@ -29,10 +29,9 @@ import com.vaadin.ui.VerticalLayout;
 @CDIView(I18n.SETTINGS_VIEW)
 public class SettingsView extends HorizontalLayout implements View {
 
-
 	@Inject
 	SettingsService settingsService;
-	
+
 	private I18n i18n;
 	private Settings mySettings;
 	private Set<Settings> settings;
@@ -42,14 +41,13 @@ public class SettingsView extends HorizontalLayout implements View {
 	private TextField txfWindowWidth;
 	private CheckBox ckbEdit;
 
-
 	public SettingsView() {
 		i18n = new I18n();
 	}
 
 	@PostConstruct
 	void init() {
-		setWidth(settingsService.getAppWindowWidth());
+		setWidth(I18n.WINDOW_WIDTH);
 		VerticalLayout content = new VerticalLayout();
 		saveButton = new Button(i18n.BASIC_SAVE);
 		mySettings = new Settings();
@@ -60,14 +58,6 @@ public class SettingsView extends HorizontalLayout implements View {
 			mySettings = entry;
 		}
 
-		cbxLanguage = new ComboBox<DefaultLanguage>(i18n.SETTINGS_LANGUAGE);
-		cbxLanguage.setItems(EnumSet.allOf(DefaultLanguage.class));
-		cbxLanguage.setValue(mySettings.getDefaultLanguage());
-
-		cbxTheme = new ComboBox<DefaultTheme>(i18n.SETTINGS_THEME);
-		cbxTheme.setItems(EnumSet.allOf(DefaultTheme.class));
-		cbxTheme.setValue(mySettings.getDefaultTheme());
-
 		ckbEdit = new CheckBox(i18n.BASIC_EDIT);
 		ckbEdit.addValueChangeListener(event -> {
 			settingsService.toggleEditing();
@@ -77,7 +67,6 @@ public class SettingsView extends HorizontalLayout implements View {
 				saveButton.setEnabled(false);
 			}
 		});
-		
 
 		txfWindowWidth = new TextField(i18n.SETTINGS_WINDOW_WIDTH);
 		txfWindowWidth.setValue(mySettings.getDefaultWindowWidth());
@@ -85,15 +74,10 @@ public class SettingsView extends HorizontalLayout implements View {
 		saveButton.setEnabled(settingsService.getEditing());
 
 		saveButton.addClickListener(event -> {
-			mySettings.setDefaultLanguage(cbxLanguage.getSelectedItem().get());
-			mySettings.setDefaultTheme(cbxTheme.getSelectedItem().get());
 			mySettings.setDefaultWindowWidth(txfWindowWidth.getValue());
-			settingsService.getSettingsDAO().update(mySettings);
+			mySettings = settingsService.getSettingsDAO().update(mySettings);
 		});
 
-		content.addComponent(cbxLanguage);
-		content.addComponent(cbxTheme);
-		content.addComponent(cbxLanguage);
 		content.addComponent(txfWindowWidth);
 		content.addComponent(ckbEdit);
 		content.addComponent(saveButton);

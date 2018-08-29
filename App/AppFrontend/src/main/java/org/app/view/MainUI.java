@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.app.controler.ElytronUserService;
 import org.app.controler.SessionService;
+import org.app.controler.SettingsService;
 import org.app.helper.I18n;
 import org.app.view.login.LoginView;
 
@@ -36,9 +37,12 @@ public class MainUI extends UI {
 
 	@Inject
 	ElytronUserService elytronUserService;
-
+	
 	@Inject
-	SessionService sessionService;
+	SettingsService settingsService;
+
+//	@Inject
+//	SessionService sessionService;
 
 	private Navigator navigator;
 
@@ -77,6 +81,7 @@ public class MainUI extends UI {
 		mainLayout.setSizeFull();
 		setTheme(I18n.getElytronTheme(elytronUserService.getLoggedInUser().getDefaultTheme()));
 		setLocale(I18n.getElytronLocale(elytronUserService.getLoggedInUser().getDefaultLanguage()));
+		I18n.WINDOW_WIDTH = settingsService.getAppWindowWidth(); 
 
 		setContent(mainLayout);
 
@@ -89,23 +94,4 @@ public class MainUI extends UI {
 		navigator.navigateTo(initialState);
 	}
 
-//	@Override
-//	public void setLocale(Locale locale) {
-//		super.setLocale(locale);
-//	}
-//
-//	@Override
-//	public Locale getLocale() {
-//		return super.getLocale();
-//	}
-
-//	@Override
-//	public void setTheme(String theme) {
-//		super.setTheme(theme);
-//	}
-//
-//	@Override
-//	public String getTheme() {
-//		return super.getTheme();
-//	}
 }

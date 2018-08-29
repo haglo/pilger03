@@ -52,7 +52,7 @@ public class AccountView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 		setSizeFull();
-		setWidth("1000px");
+		setWidth(I18n.WINDOW_WIDTH);
 
 		VerticalLayout content = new VerticalLayout();
 		selectedAccounts = new HashSet<>();

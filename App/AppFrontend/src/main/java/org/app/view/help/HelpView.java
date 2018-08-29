@@ -25,6 +25,10 @@ public class HelpView extends HorizontalLayout implements View {
 
 	@Inject
 	JaasAccessControl accessControl;
+	
+	@Inject
+	
+	
 
 	public HelpView() {
 		setMargin(new MarginInfo(false, true, true, true));
@@ -33,19 +37,21 @@ public class HelpView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 		setSizeFull();
-		setWidth("1000px");
+		setWidth(I18n.WINDOW_WIDTH);
  
 		VerticalLayout content = new VerticalLayout();
 
 		Label username = new Label("Elytronuser: " +accessControl.getPrincipalName());
 		Label loc = new Label("Lokale: " +((MainUI) UI.getCurrent()).getLocale());
 		Label theme = new Label("Theme: " +((MainUI) UI.getCurrent()).getTheme());
+		Label windowWidth = new Label("WindowWidth: " +I18n.WINDOW_WIDTH);
 		
 		content.addComponent(headingLabel());
 		content.addComponent(someText());
 		content.addComponent(username);
 		content.addComponent(loc);
 		content.addComponent(theme);
+		content.addComponent(windowWidth);
 		addComponent(content);
 		setDefaultComponentAlignment(Alignment.TOP_CENTER);
 	}

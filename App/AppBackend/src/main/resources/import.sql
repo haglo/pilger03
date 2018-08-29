@@ -40,5 +40,5 @@ insert into pilgerdb.title (uuid, listprio, title) values (uuid_v4(), 2, 'Dr.');
 insert into pilgerdb.title (uuid, listprio, title) values (uuid_v4(), 3, 'Graf von');
 insert into pilgerdb.title (uuid, listprio, title) values (uuid_v4(), 4, 'Freiherr von');
 
-insert into pilgerdb.settings(uuid, defaultLanguage, defaultTheme, defaultWindowWidth) values (uuid_v4(), 'english', 'Default', '1200px');
+insert into pilgerdb.settings(uuid, defaultWindowWidth) values (uuid_v4(), '1200px');
 

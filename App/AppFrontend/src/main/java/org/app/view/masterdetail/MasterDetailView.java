@@ -37,7 +37,7 @@ public class MasterDetailView extends VerticalLayout implements View {
 	public MasterDetailView() {
 		setSizeFull();
 		setMargin(new MarginInfo(true, true, true, true));
-		setWidth("1000px");
+		setWidth(I18n.WINDOW_WIDTH);
 	}
 
 	@PostConstruct

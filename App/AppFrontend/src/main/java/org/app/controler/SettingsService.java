@@ -40,53 +40,6 @@ public class SettingsService implements Serializable {
 		return settingsDAO;
 	}
 
-	public Locale getAppLocale() {
-		Settings mySettings = new Settings();
-		List<Settings> settings = settingsDAO.findAll();
-		for (Settings entry : settings) {
-			mySettings = entry;
-		}
-
-		switch (mySettings.getDefaultLanguage()) {
-		case english:
-			return Locale.ENGLISH;
-		case german:
-			return Locale.GERMAN;
-		default:
-			return Locale.ENGLISH;
-		}
-	}
-
-	public String getAppTheme() {
-		Settings mySettings = new Settings();
-		List<Settings> settings = settingsDAO.findAll();
-		for (Settings entry : settings) {
-			mySettings = entry;
-		}
-		switch (mySettings.getDefaultTheme()) {
-		case Standard:
-			return "appui";
-		case Default:
-			return "default";
-		case Medjugorje:
-			return "blueprint";
-		case Jugend2000:
-			return "facebook";
-		case Dark:
-			return "dark";
-		case Flat:
-			return "flat";
-		case FlatDark:
-			return "flatdark";
-		case Light:
-			return "light";
-		case Metro:
-			return "metro";
-		default:
-			return "appui";
-		}
-	}
-
 	public String getAppWindowWidth() {
 		Settings mySettings = new Settings();
 		List<Settings> settings = settingsDAO.findAll();

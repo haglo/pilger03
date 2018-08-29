@@ -64,7 +64,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 		setSizeFull();
-		setWidth("1200px");
+		setWidth(I18n.WINDOW_WIDTH);
 
 		VerticalLayout content = new VerticalLayout();
 		selectedUsers = new HashSet<>();

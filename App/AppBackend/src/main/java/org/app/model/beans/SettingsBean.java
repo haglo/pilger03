@@ -20,7 +20,11 @@ public class SettingsBean implements SettingsDAO {
 
 	@Override
 	public Settings update(Settings settings) {
-		return em.merge(settings);
+		try {
+			return em.merge(settings);
+		} finally {
+			em.flush();
+		}
 	}
 
 	@Override
