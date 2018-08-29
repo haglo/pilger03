@@ -13,12 +13,14 @@ import org.app.controler.AddressService;
 import org.app.controler.PersonService;
 import org.app.helper.I18n;
 import org.app.model.entity.Person;
+import org.app.view.TopMainMenu;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.cdi.UIScoped;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -41,7 +43,10 @@ public class PersonView extends VerticalLayout implements View {
 	
 	@Inject
 	AddressService addressService;
-
+	
+	@Inject
+	TopMainMenu topMainMenu;
+	
 
 	private I18n i18n;
 	private Person selectedPerson;
@@ -170,7 +175,7 @@ public class PersonView extends VerticalLayout implements View {
 		mainContent.setSecondComponent(addressCommunicationContent);
 		addComponent(mainContent);
 	}
-
+	
 	private void showAddresses(Person selectedPerson) {
 		addressView = new AddressView(selectedPerson, personService);
 		addressCommunicationContent.addComponent(addressView);

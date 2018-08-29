@@ -84,6 +84,7 @@ public class MainUI extends UI {
 		I18n.WINDOW_WIDTH = settingsService.getAppWindowWidth(); 
 
 		setContent(mainLayout);
+		topNavBar.updateMessageStrings();
 
 		navigator = new Navigator(this, contentView);
 		navigator.addProvider(viewProvider);

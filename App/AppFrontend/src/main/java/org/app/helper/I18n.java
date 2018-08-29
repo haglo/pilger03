@@ -52,6 +52,7 @@ public final class I18n {
 	public String NAVI_PERSONS = i18m.getMessage("navi.persons");
 	public String NAVI_MASTER_DETAIL = i18m.getMessage("navi.masterdetail");
 	public String NAVI_ACCOUNTS = i18m.getMessage("navi.accounts");
+	public String NAVI_ELYTRON_USER = i18m.getMessage("navi.elytronuser");
 	public String NAVI_HELP = i18m.getMessage("navi.help");
 	public String NAVI_SETTINGS = i18m.getMessage("navi.settings");
 	public String NAVI_LOGOUT = i18m.getMessage("navi.logout");
