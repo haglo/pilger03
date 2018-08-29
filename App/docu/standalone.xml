@@ -102,6 +102,18 @@
                     <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
             </console-handler>
+            <custom-handler name="DBLogHandler" class="com.mastertheboss.JdbcLogger" module="org.logger.mysql">
+                <level name="ERROR"/>
+                <formatter>
+                    <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
+                </formatter>
+                <properties>
+                    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+                    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/pilgerdb"/>
+                    <property name="username" value="pilgeruser"/>
+                    <property name="password" value="123atgfd"/>
+                </properties>
+            </custom-handler>
             <periodic-rotating-file-handler name="FILE" autoflush="true">
                 <formatter>
                     <named-formatter name="PATTERN"/>
@@ -131,15 +143,19 @@
                     <handler name="CONSOLE.SECURITY"/>
                 </handlers>
             </logger>
+            <logger category="org.jboss.as.jpa">
+                <level name="TRACE"/>
+            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
+                    <handler name="DBLogHandler"/>
                 </handlers>
             </root-logger>
             <formatter name="PATTERN">
-                <pattern-formatter pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/>
+                <pattern-formatter pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] %s%e%n"/>
             </formatter>
             <formatter name="COLOR-PATTERN">
                 <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/>
@@ -286,7 +302,7 @@
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
                 <jdbc-realm name="SecurityPilgerDbRealm">
-                    <principal-query sql="SELECT PASSWORD FROM ACCOUNT WHERE USERNAME = ?" data-source="PilgerDS">
+                    <principal-query sql="SELECT PASSWORD FROM ELYTRONUSER WHERE USERNAME = ?" data-source="PilgerDS">
                         <clear-password-mapper password-index="1"/>
                     </principal-query>
                     <principal-query sql="SELECT R.ROLENAME from ELYTRONROLE AS R, ELYTRONUSER AS U WHERE R.ID = (SELECT U.ELYTRON_ROLE_ID WHERE U.USERNAME = ?)" data-source="PilgerDS">
@@ -577,10 +593,7 @@
     </socket-binding-group>
     <deployments>
         <deployment name="AppAggregat-0.0.1-SNAPSHOT.ear" runtime-name="AppAggregat-0.0.1-SNAPSHOT.ear">
-            <content sha1="3a8e717aeee642f59c147df7a5794cbecbe4e8de"/>
-        </deployment>
-        <deployment name="AppBackend.jar" runtime-name="AppBackend.jar">
-            <content sha1="4e49b69dd93f6c9c56978450a0303b5b007e5b86"/>
+            <content sha1="21800a3b619922c5902215852bc6aed75c1ee6e4"/>
         </deployment>
     </deployments>
 </server>
