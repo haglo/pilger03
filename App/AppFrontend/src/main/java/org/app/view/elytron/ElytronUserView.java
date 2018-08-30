@@ -48,6 +48,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 	@Inject
 	ElytronRoleService elytronRoleService;
 
+	private I18n i18n;
 	private ElytronUser user;
 	private Set<ElytronUser> selectedUsers;
 	private TextField txfRolename = new TextField();
@@ -58,6 +59,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 	private Grid<ElytronUser> grid;
 
 	public ElytronUserView() {
+		i18n = new I18n();
 		setMargin(new MarginInfo(false, true, true, true));
 	}
 
@@ -102,17 +104,17 @@ public class ElytronUserView extends HorizontalLayout implements View {
 		cbxTheme.setItems(EnumSet.allOf(DefaultTheme.class));
 
 		grid.setDataProvider(dataProvider);
-		grid.addColumn(ElytronUser::getUsername).setCaption("Benutzername")
-				.setEditorComponent(txfRolename, ElytronUser::setUsername).setId("Benutzername");
-		grid.addColumn(ElytronUser::getElytronRole).setCaption("Rolle")
+		grid.addColumn(ElytronUser::getUsername).setCaption(i18n.ACCOUNT_USERNAME)
+				.setEditorComponent(txfRolename, ElytronUser::setUsername).setId(i18n.ACCOUNT_USERNAME);
+		grid.addColumn(ElytronUser::getElytronRole).setCaption(i18n.ACCOUNT_GROUP)
 				.setRenderer(role -> role != null ? role.getRolename() : null, new TextRenderer())
 				.setEditorComponent(cbxRole, ElytronUser::setElytronRole);
-		grid.addColumn(ElytronUser::getDefaultLanguage).setCaption("Sprache").setEditorComponent(cbxLanguage,
+		grid.addColumn(ElytronUser::getDefaultLanguage).setCaption(i18n.BASIC_LANGUAGE).setEditorComponent(cbxLanguage,
 				ElytronUser::setDefaultLanguage);
-		grid.addColumn(ElytronUser::getDefaultTheme).setCaption("Design").setEditorComponent(cbxTheme,
+		grid.addColumn(ElytronUser::getDefaultTheme).setCaption(i18n.BASIC_THEME).setEditorComponent(cbxTheme,
 				ElytronUser::setDefaultTheme);
-		grid.addColumn(ElytronUser::getComment).setCaption("Kommentar")
-				.setEditorComponent(txfComment, ElytronUser::setComment).setId("Kommentar");
+		grid.addColumn(ElytronUser::getComment).setCaption(i18n.BASIC_COMMENT)
+				.setEditorComponent(txfComment, ElytronUser::setComment).setId(i18n.BASIC_COMMENT);
 
 		Button delete = new Button("-");
 		delete.addClickListener(event -> deleteRow());
@@ -146,7 +148,7 @@ public class ElytronUserView extends HorizontalLayout implements View {
 
 	public void refreshGrid() {
 		List<ElytronUser> list = elytronUserService.getElytronUserDAO().findAllExpanded();
-		grid.sort("Benutzername", SortDirection.ASCENDING);
+		grid.sort(i18n.ACCOUNT_USERNAME, SortDirection.ASCENDING);
 		grid.setItems(list);
 	}
 

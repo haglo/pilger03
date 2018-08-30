@@ -38,13 +38,10 @@ public class PersonDetailView extends Window {
 		this.setContent(subContent);
 		this.center();
 
-		this.setStyleName("point1");
-		subContent.setStyleName("point2");
-
 		try {
 			personService.setEditing(false);
 
-			TextField txfID = new TextField("ID", "" + selectedPerson.getId());
+			TextField txfID = new TextField(i18n.BASIC_ID, "" + selectedPerson.getId());
 			subContent.addComponent(txfID);
 
 			txfFirstname = new TextField(i18n.PERSON_SURNAME, "" + selectedPerson.getFirstName());

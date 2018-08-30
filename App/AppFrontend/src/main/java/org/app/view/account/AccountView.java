@@ -73,9 +73,9 @@ public class AccountView extends HorizontalLayout implements View {
 		});
 
 		grid.setDataProvider(dataProvider);
-		grid.addColumn(Account::getUsername).setCaption("Benutzername")
-				.setEditorComponent(firstEntryField, Account::setUsername).setId("Benutzername");
-		grid.addColumn(Account::getPassword).setCaption("Passwort").setEditorComponent(txfPassword,
+		grid.addColumn(Account::getUsername).setCaption(i18n.ACCOUNT_USERNAME)
+				.setEditorComponent(firstEntryField, Account::setUsername).setId(i18n.ACCOUNT_USERNAME);
+		grid.addColumn(Account::getPassword).setCaption(i18n.ACCOUNT_PASSWORD).setEditorComponent(txfPassword,
 				Account::setPassword);
 
 		Button add = new Button("+");
@@ -121,7 +121,7 @@ public class AccountView extends HorizontalLayout implements View {
 
 	public void refreshGrid() {
 		List<Account> list = accountService.findAll();
-		grid.sort("Benutzername", SortDirection.ASCENDING);
+		grid.sort(i18n.ACCOUNT_USERNAME, SortDirection.ASCENDING);
 		grid.setItems(list);
 	}
 

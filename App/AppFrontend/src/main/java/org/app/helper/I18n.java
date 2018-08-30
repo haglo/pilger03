@@ -30,12 +30,14 @@ public final class I18n {
 	public static String WINDOW_WIDTH = "";
 
 	public String BASIC_ID = "ID";
+	public String BASIC_UUID = "UUID";
 
 	public String BASIC_EDIT = i18m.getMessage("basic.edit");
 	public String BASIC_SAVE = i18m.getMessage("basic.save");
 	public String BASIC_LIST_PRIO = i18m.getMessage("basic.listprio");
 	public String BASIC_COMMENT = i18m.getMessage("basic.comment");
 	public String BASIC_ABOUT = i18m.getMessage("basic.about");
+	public String BASIC_DATE = i18m.getMessage("basic.date");
 	public String BASIC_CREATE_BY = i18m.getMessage("basic.createby");
 	public String BASIC_CREATE_AT = i18m.getMessage("basic.createat");
 	public String BASIC_MODIFY_BY = i18m.getMessage("basic.modifyby");
@@ -45,6 +47,10 @@ public final class I18n {
 	public String BASIC_MOBILE = i18m.getMessage("basic.mobile");
 	public String BASIC_FAX = i18m.getMessage("basic.fax");
 	public String BASIC_WEBSITE = i18m.getMessage("basic.website");
+	public String BASIC_LANGUAGE = i18m.getMessage("basic.language");
+	public String BASIC_THEME = i18m.getMessage("basic.theme");
+	public String BASIC_TYPE = i18m.getMessage("basic.type");
+	
 
 	public String AUTH_LOGIN = i18m.getMessage("auth.login");
 	public String AUTH_REMEMBER_ME = i18m.getMessage("auth.rememberme");
@@ -69,15 +75,14 @@ public final class I18n {
 	public String TITLE_WINDOW_DETAIL_CAPTION = i18m.getMessage("title.windowdetailcaption");
 	public String TITLE_WINDOW_NEW_CAPTION = i18m.getMessage("title.windownewcaption");
 	public String TITLE_VALUE = i18m.getMessage("title.value");
-
+	public String TITLE_AUDIT = i18m.getMessage("title.audit");
+	
 	public String ACCOUNT_WINDOW_DETAIL_CAPTION = i18m.getMessage("account.windowdetailcaption");
 	public String ACCOUNT_WINDOW_NEW_CAPTION = i18m.getMessage("account.windownewcaption");
 	public String ACCOUNT_USERNAME = i18m.getMessage("account.username");
 	public String ACCOUNT_PASSWORD = i18m.getMessage("account.password");
 	public String ACCOUNT_GROUP = i18m.getMessage("account.group");
 
-	public String SETTINGS_LANGUAGE = i18m.getMessage("settings.language");
-	public String SETTINGS_THEME = i18m.getMessage("settings.theme");
 	public String SETTINGS_WINDOW_WIDTH = i18m.getMessage("settings.windowwidth");
 
 	public String HELP_LANGUAGE = i18m.getMessage("help.language");

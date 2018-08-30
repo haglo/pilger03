@@ -35,10 +35,10 @@ public class TitleDetailView extends Window {
 		try {
 			titleService.setEditing(false);
 
-			TextField txfID = new TextField("ID", "" + selectedTitle.getId());
+			TextField txfID = new TextField(i18n.BASIC_ID, "" + selectedTitle.getId());
 			subContent.addComponent(txfID);
 
-			TextField txfUUID = new TextField("UUID", "" + selectedTitle.getUuid());
+			TextField txfUUID = new TextField(i18n.BASIC_UUID, "" + selectedTitle.getUuid());
 			subContent.addComponent(txfUUID);
 
 			txfListPrio = new TextField(i18n.BASIC_LIST_PRIO, "" + selectedTitle.getListPrio());

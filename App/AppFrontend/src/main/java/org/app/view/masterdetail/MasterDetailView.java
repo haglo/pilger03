@@ -27,6 +27,7 @@ public class MasterDetailView extends VerticalLayout implements View {
 	// @Inject
 	// LandService landService;
 
+	private I18n i18n;
 	private HorizontalLayout mainView;
 	private VerticalLayout masterDetailLeftNavBar;
 	private CssLayout masterDetailContent;
@@ -35,6 +36,7 @@ public class MasterDetailView extends VerticalLayout implements View {
 	// private Button landButton;
 
 	public MasterDetailView() {
+		i18n = new I18n();
 		setSizeFull();
 		setMargin(new MarginInfo(true, true, true, true));
 		setWidth(I18n.WINDOW_WIDTH);
@@ -47,10 +49,6 @@ public class MasterDetailView extends VerticalLayout implements View {
 		masterDetailLeftNavBar.setMargin(false);
 		masterDetailContent = new CssLayout();
 		masterDetailContent.setSizeFull();
-
-		Label head = new Label("Master Detail");
-
-		masterDetailLeftNavBar.addComponent(head);
 
 		masterDetailLeftNavBar.addComponent(showTitleView());
 		masterDetailContent.addComponent(new TitleView(titleService));
@@ -68,7 +66,7 @@ public class MasterDetailView extends VerticalLayout implements View {
 	}
 
 	private Button showTitleView() {
-		titleButton = new Button("Title", new Button.ClickListener() {
+		titleButton = new Button(i18n.TITLE_VALUE, new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				masterDetailContent.removeAllComponents();

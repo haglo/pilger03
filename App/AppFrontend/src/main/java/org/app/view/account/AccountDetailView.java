@@ -47,7 +47,7 @@ public class AccountDetailView extends Window {
 		try {
 			accountService.setEditing(false);
 
-			TextField txfID = new TextField("ID", "" + selectedAccount.getId());
+			TextField txfID = new TextField(i18n.BASIC_ID, "" + selectedAccount.getId());
 			txfID.setReadOnly(true);
 			subContent.addComponent(txfID);
 

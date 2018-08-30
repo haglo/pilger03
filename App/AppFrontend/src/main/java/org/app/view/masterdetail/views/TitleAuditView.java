@@ -3,6 +3,7 @@ package org.app.view.masterdetail.views;
 import java.util.List;
 
 import org.app.controler.TitleService;
+import org.app.helper.I18n;
 import org.app.model.entity.Title;
 import org.app.model.entity.Title_AUD;
 
@@ -18,8 +19,9 @@ public class TitleAuditView extends Window {
 
 	@SuppressWarnings("static-access")
 	public TitleAuditView(Title selectedTitle, TitleService service) {
+		I18n i18n = new I18n();
 
-		this.setCaption("Title History");
+		this.setCaption(i18n.TITLE_AUDIT);
 		VerticalLayout subContent = new VerticalLayout();
 		this.setContent(subContent);
 		this.center();
@@ -34,27 +36,27 @@ public class TitleAuditView extends Window {
 		grid.addColumn(aud -> {
 			String result = "" + aud.getReventity().getListPrio();
 			return result;
-		}).setCaption("Listposition");
+		}).setCaption(i18n.BASIC_LIST_PRIO);
 
 		grid.addColumn(aud -> {
 			String result = "" + aud.getReventity().getTitle();
 			return result;
-		}).setCaption("Titel");
+		}).setCaption(i18n.TITLE_VALUE);
 
 		grid.addColumn(aud -> {
 			String result = "" + aud.getRevision().getRevisionDate();
 			return result;
-		}).setCaption("Datum");
+		}).setCaption(i18n.BASIC_DATE);
 
 		grid.addColumn(aud -> {
 			String result = "" + aud.getRevision().getElytronUser().getUsername();
 			return result;
-		}).setCaption("Benutzer Name");
+		}).setCaption(i18n.ACCOUNT_USERNAME);
 
 		grid.addColumn(aud -> {
 			String result = "" + aud.getRevType();
 			return result;
-		}).setCaption("Art");
+		}).setCaption(i18n.BASIC_TYPE);
 
 		subContent.addComponent(grid);
 		this.setWidth("80%");
