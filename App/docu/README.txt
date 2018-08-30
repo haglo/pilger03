@@ -1,3 +1,6 @@
 Funktionierendes System
-Ohne Debugging
-Ohne Logging in MySQL
+Alles ist integriert
+- Logging
+- Internatianalisierung
+- usw.
+Wird von Marco optimiert
