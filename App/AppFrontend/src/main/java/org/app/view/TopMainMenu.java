@@ -43,6 +43,8 @@ public class TopMainMenu extends CustomComponent {
 
 	Button helpViewButton = new Button("Help", e -> UI.getCurrent().getNavigator().navigateTo(I18n.HELP_VIEW));
 	
+	Button emailViewButton = new Button("Email", e -> UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW));
+
 	Button settingsViewButton = new Button("Settings",
 			e -> UI.getCurrent().getNavigator().navigateTo(I18n.SETTINGS_VIEW));
 
@@ -78,8 +80,8 @@ public class TopMainMenu extends CustomComponent {
 		userViewButton.addStyleName("icon-align-top");
 		helpViewButton.setIcon(VaadinIcons.QUESTION);
 		helpViewButton.addStyleName("icon-align-top");
-		settingsViewButton.setIcon(VaadinIcons.COGS);
-		settingsViewButton.addStyleName("icon-align-top");
+		emailViewButton.setIcon(VaadinIcons.ENVELOPE);
+		emailViewButton.addStyleName("icon-align-top");
 		settingsViewButton.setIcon(VaadinIcons.COGS);
 		settingsViewButton.addStyleName("icon-align-top");
 
@@ -96,7 +98,7 @@ public class TopMainMenu extends CustomComponent {
 //		}
 
 		layout.addComponent(helpViewButton);
-
+		layout.addComponent(emailViewButton);
 		layout.addComponent(settingsViewButton);
 		layout.addComponent(logoutButton());
 		setCompositionRoot(layout);
@@ -109,6 +111,7 @@ public class TopMainMenu extends CustomComponent {
 		accountViewButton.setCaption(i18n.NAVI_ACCOUNTS);
 		userViewButton.setCaption(i18n.NAVI_ELYTRON_USER);
 		helpViewButton.setCaption(i18n.NAVI_HELP);
+		emailViewButton.setCaption(i18n.NAVI_EMAIL);
 		settingsViewButton.setCaption(i18n.NAVI_SETTINGS);
 		logOutButton.setCaption(i18n.NAVI_LOGOUT);
 	}

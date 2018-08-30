@@ -60,7 +60,6 @@ public class MasterDetailView extends VerticalLayout implements View {
 		mainView.setExpandRatio(masterDetailLeftNavBar, 0.2f);
 		mainView.setExpandRatio(masterDetailContent, 0.8f);
 
-		addStyleName("navigation-bar");
 		addComponent(mainView);
 
 	}

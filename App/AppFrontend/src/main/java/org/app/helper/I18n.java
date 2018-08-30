@@ -14,11 +14,13 @@ public final class I18n {
 	public static final String PERSON_VIEW = "Person";
 	public static final String MASTER_DETAIL_VIEW = "MasterDetail";
 	public static final String ACCOUNT_VIEW = "Account";
+	public static final String ELYTRON_USER_VIEW = "ElytronUserView";
 	public static final String HELP_VIEW = "Help";
 	public static final String TITLE_VIEW = "Title";
 	public static final String SETTINGS_VIEW = "Settings";
-	public static final String SPLIT_VIEW = "Split";
-	public static final String ELYTRON_USER_VIEW = "ElytronUserView";
+	public static final String EMAIL_VIEW = "Email";
+	public static final String INBOX_VIEW = "Inbox";
+	
 	public static final String THEME = "Theme";
 	public static final String LOCALE = "Locale";
 	public static final String ROLE_SYSTEM = "System";
@@ -60,6 +62,7 @@ public final class I18n {
 	public String NAVI_ACCOUNTS = i18m.getMessage("navi.accounts");
 	public String NAVI_ELYTRON_USER = i18m.getMessage("navi.elytronuser");
 	public String NAVI_HELP = i18m.getMessage("navi.help");
+	public String NAVI_EMAIL = i18m.getMessage("navi.email");
 	public String NAVI_SETTINGS = i18m.getMessage("navi.settings");
 	public String NAVI_LOGOUT = i18m.getMessage("navi.logout");
 
@@ -82,6 +85,9 @@ public final class I18n {
 	public String ACCOUNT_USERNAME = i18m.getMessage("account.username");
 	public String ACCOUNT_PASSWORD = i18m.getMessage("account.password");
 	public String ACCOUNT_GROUP = i18m.getMessage("account.group");
+	
+	public String EMAIL_INBOX = i18m.getMessage("email.inbox");
+	
 
 	public String SETTINGS_WINDOW_WIDTH = i18m.getMessage("settings.windowwidth");
 
