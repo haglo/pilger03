@@ -52,8 +52,9 @@ public final class I18n {
 	public String BASIC_LANGUAGE = i18m.getMessage("basic.language");
 	public String BASIC_THEME = i18m.getMessage("basic.theme");
 	public String BASIC_TYPE = i18m.getMessage("basic.type");
+	public String BASIC_DELETE = i18m.getMessage("basic.delete");
+	public String BASIC_PRINT = i18m.getMessage("basic.print");
 	
-
 	public String AUTH_LOGIN = i18m.getMessage("auth.login");
 	public String AUTH_REMEMBER_ME = i18m.getMessage("auth.rememberme");
 
@@ -87,6 +88,18 @@ public final class I18n {
 	public String ACCOUNT_GROUP = i18m.getMessage("account.group");
 	
 	public String EMAIL_INBOX = i18m.getMessage("email.inbox");
+	public String EMAIL_OUTBOX = i18m.getMessage("email.outbox");
+	public String EMAIL_TRASH = i18m.getMessage("email.trash");
+	public String EMAIL_ARCHIVE = i18m.getMessage("email.archive");
+	public String EMAIL_LOST = i18m.getMessage("email.lost");
+	public String EMAIL_HEADER = i18m.getMessage("email.header");
+	public String EMAIL_BODY = i18m.getMessage("email.body");
+	public String EMAIL_CALL = i18m.getMessage("email.call");
+	public String EMAIL_WRITE = i18m.getMessage("email.write");
+	public String EMAIL_SEND = i18m.getMessage("email.send");
+	public String EMAIL_ANSWER = i18m.getMessage("email.answer");
+	public String EMAIL_FORWARD = i18m.getMessage("email.forward");
+	public String EMAIL_SIGNATURE = i18m.getMessage("email.signature");
 	
 
 	public String SETTINGS_WINDOW_WIDTH = i18m.getMessage("settings.windowwidth");

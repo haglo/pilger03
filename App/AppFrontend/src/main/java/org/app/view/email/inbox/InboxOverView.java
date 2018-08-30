@@ -1,39 +1,51 @@
 package org.app.view.email.inbox;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
-import org.app.controler.PersonService;
+
+import org.app.controler.EmailService;
 import org.app.helper.I18n;
-import org.app.model.dao.PersonDAO;
-import org.app.model.entity.Address;
-import org.app.model.entity.Person;
+import org.app.model.entity.Email;
+
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 public class InboxOverView extends VerticalLayout {
 
 	private I18n i18n;
-	private Grid<Address> grid;
+	private Grid<Email> grid;
+	private ListDataProvider<Email> dataProvider;
+	private Set<Email> selectedEntries;
 
-	public InboxOverView() {
+	public InboxOverView(EmailService service) {
 		i18n = new I18n();
 		setMargin(new MarginInfo(false, true, false, false));
 		setSizeFull();
-		grid = new Grid<Address>();
+		
+		final List<Email> list = service.getEmailDAO().findAll();
+		selectedEntries = new HashSet<>();
+		dataProvider = DataProvider.ofCollection(list);
+		dataProvider.setSortOrder(Email::getId, SortDirection.ASCENDING);
+		
+		grid = new Grid<Email>();
 		grid.setSizeFull();
+		grid.setWidth("100%");
+		
 		grid.setSelectionMode(SelectionMode.MULTI);
+		grid.addSelectionListener(event -> {
+			selectedEntries = event.getAllSelectedItems();
+		});
+
+		grid.setDataProvider(dataProvider);
+		grid.addColumn(Email::getHeader).setCaption(i18n.EMAIL_HEADER).setId(i18n.EMAIL_HEADER);
+		
 		addComponent(grid);
 	}
 

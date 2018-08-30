@@ -4,7 +4,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.app.helper.I18n;
+import org.app.model.entity.Title;
 import org.app.view.email.inbox.InboxView;
+import org.app.view.email.settings.SettingsView;
+import org.app.view.masterdetail.views.TitleDetailView;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
@@ -18,7 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @CDIView(I18n.EMAIL_VIEW)
 public class EmailView extends VerticalLayout implements View {
-	
+
 	@Inject
 	InboxView inboxView;
 
@@ -26,9 +29,14 @@ public class EmailView extends VerticalLayout implements View {
 	private VerticalLayout mainView;
 	private EmailTopMenu emailTopMenu;
 	private HorizontalLayout emailContentView;
-	private VerticalLayout emailContentLeftBar ;
+	private VerticalLayout emailContentLeftBar;
 	private VerticalLayout emailContentRightBar;
 	private Button inboxButton;
+	private Button outboxButton;
+	private Button trashButton;
+	private Button archiveButton;
+	private Button lostButton;
+	private Button settingsButton;
 
 	public EmailView() {
 		i18n = new I18n();
@@ -39,25 +47,32 @@ public class EmailView extends VerticalLayout implements View {
 	@PostConstruct
 	void init() {
 		mainView = new VerticalLayout();
+		mainView.setMargin(false);
 		emailTopMenu = new EmailTopMenu();
 		emailContentView = new HorizontalLayout();
-		
+		emailContentView.setMargin(false);
+		emailContentView.setSizeFull();
+
 		emailContentLeftBar = new VerticalLayout();
 		emailContentLeftBar.setMargin(false);
 		emailContentRightBar = new VerticalLayout();
+		emailContentLeftBar.setMargin(false);
 		emailContentRightBar.setSizeFull();
 
 		emailContentLeftBar.addComponent(showInboxView());
+		emailContentLeftBar.addComponent(showOutboxView());
+		emailContentLeftBar.addComponent(showTrashView());
+		emailContentLeftBar.addComponent(showArchiveView());
+		emailContentLeftBar.addComponent(showLostView());
+		emailContentLeftBar.addComponent(showSettingsView());
 		emailContentRightBar.addComponent(inboxView);
 
-		emailContentView.addComponent(emailContentLeftBar );
+		emailContentView.addComponent(emailContentLeftBar);
 		emailContentView.addComponent(emailContentRightBar);
 		emailContentView.setSizeFull();
 
-		emailContentView.setExpandRatio(emailContentLeftBar , 0.2f);
+		emailContentView.setExpandRatio(emailContentLeftBar, 0.2f);
 		emailContentView.setExpandRatio(emailContentRightBar, 0.8f);
-		
-		
 
 		mainView.addComponent(emailTopMenu);
 		mainView.addComponent(emailContentView);
@@ -74,5 +89,62 @@ public class EmailView extends VerticalLayout implements View {
 		});
 		return inboxButton;
 	}
+
+	private Button showOutboxView() {
+		outboxButton = new Button(i18n.EMAIL_OUTBOX, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				emailContentRightBar.removeAllComponents();
+				emailContentRightBar.addComponent(inboxView);
+			}
+		});
+		return outboxButton;
+	}
+
+	private Button showTrashView() {
+		trashButton = new Button(i18n.EMAIL_TRASH, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				emailContentRightBar.removeAllComponents();
+				emailContentRightBar.addComponent(inboxView);
+			}
+		});
+		return trashButton;
+	}
+	
+	private Button showArchiveView() {
+		archiveButton = new Button(i18n.EMAIL_ARCHIVE, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				emailContentRightBar.removeAllComponents();
+				emailContentRightBar.addComponent(inboxView);
+			}
+		});
+		return archiveButton;
+	}
+	
+	private Button showLostView() {
+		lostButton = new Button(i18n.EMAIL_LOST, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				emailContentRightBar.removeAllComponents();
+				emailContentRightBar.addComponent(inboxView);
+			}
+		});
+		return lostButton;
+	}
+	
+	private Button showSettingsView() {
+		settingsButton = new Button(i18n.NAVI_SETTINGS, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getUI().addWindow(new SettingsView());
+			}
+		});
+		return settingsButton;
+	}
+
+
+
 
 }

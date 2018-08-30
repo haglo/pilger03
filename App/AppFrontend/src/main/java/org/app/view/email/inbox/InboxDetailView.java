@@ -22,5 +22,4 @@ public class InboxDetailView extends VerticalLayout {
 		addComponent(mainContent);
 	}
 
-
 }

@@ -1,38 +1,54 @@
 package org.app.view.email;
 
 import javax.annotation.security.DeclareRoles;
-import javax.servlet.ServletException;
-import org.app.helper.I18n;
-import org.app.helper.I18nManager;
 
-import com.vaadin.cdi.access.JaasAccessControl;
+import org.app.helper.I18n;
+import org.app.view.email.send.SendView;
+
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@DeclareRoles({ I18n.ROLE_SYSTEM, I18n.ROLE_POWERUSER, I18n.ROLE_ADMINISTRATOR, I18n.ROLE_USER, I18n.ROLE_GUEST })
 public class EmailTopMenu extends CustomComponent {
 
 	private I18n i18n;
-	
+
 	public EmailTopMenu() {
 		i18n = new I18n();
-		Button callButton = new Button("Call", e -> UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW));
+		Button callButton = new Button(i18n.EMAIL_CALL,
+				e -> UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW));
 		callButton.setIcon(VaadinIcons.CLOUD_DOWNLOAD);
-		Button writeButton = new Button("Write", e -> UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW));
-		callButton.setIcon(VaadinIcons.EDIT);
-		
-		CssLayout emailNavBar = new CssLayout(callButton, writeButton);
-		emailNavBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		
-		setCompositionRoot(emailNavBar);
+		callButton.addStyleName("icon-align-top");
 
+		Button writeButton = new Button(i18n.EMAIL_WRITE, e -> getUI().addWindow(new SendView()));
+		writeButton.setIcon(VaadinIcons.EDIT);
+		writeButton.addStyleName("icon-align-top");
+
+		Button answerButton = new Button(i18n.EMAIL_ANSWER, e -> getUI().addWindow(new SendView()));
+		answerButton.setIcon(VaadinIcons.ARROW_BACKWARD);
+		answerButton.addStyleName("icon-align-top");
+
+		Button forwardButton = new Button(i18n.EMAIL_FORWARD, e -> getUI().addWindow(new SendView()));
+		forwardButton.setIcon(VaadinIcons.LEVEL_RIGHT_BOLD);
+		forwardButton.addStyleName("icon-align-top");
+
+		Button printButton = new Button(i18n.BASIC_PRINT, e -> getUI().addWindow(new SendView()));
+		printButton.setIcon(VaadinIcons.PRINT);
+		printButton.addStyleName("icon-align-top");
+
+		Button deleteButton = new Button(i18n.BASIC_DELETE, e -> getUI().addWindow(new SendView()));
+		deleteButton.setIcon(VaadinIcons.TRASH);
+		deleteButton.addStyleName("icon-align-top");
+
+		CssLayout emailNavBar = new CssLayout(callButton, writeButton, answerButton, forwardButton, printButton,
+				deleteButton);
+		emailNavBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+
+		setCompositionRoot(emailNavBar);
 	}
 
 }
