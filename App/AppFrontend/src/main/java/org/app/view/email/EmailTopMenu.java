@@ -2,6 +2,7 @@ package org.app.view.email;
 
 import javax.annotation.security.DeclareRoles;
 
+import org.app.controler.email.CheckingEmails;
 import org.app.helper.I18n;
 import org.app.view.email.send.SendView;
 
@@ -16,11 +17,16 @@ import com.vaadin.ui.themes.ValoTheme;
 public class EmailTopMenu extends CustomComponent {
 
 	private I18n i18n;
+	private CheckingEmails checkingEmails;
 
 	public EmailTopMenu() {
 		i18n = new I18n();
+		checkingEmails = new CheckingEmails();
 		Button callButton = new Button(i18n.EMAIL_CALL,
-				e -> UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW));
+				e -> {
+					UI.getCurrent().getNavigator().navigateTo(I18n.EMAIL_VIEW);
+					checkingEmails.check();
+				});
 		callButton.setIcon(VaadinIcons.CLOUD_DOWNLOAD);
 		callButton.addStyleName("icon-align-top");
 

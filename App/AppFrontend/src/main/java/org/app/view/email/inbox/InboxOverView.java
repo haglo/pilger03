@@ -3,10 +3,15 @@ package org.app.view.email.inbox;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+
+import javax.mail.MessagingException;
 
 import org.app.controler.EmailService;
+import org.app.controler.email.CheckingEmails;
 import org.app.helper.I18n;
 import org.app.model.entity.Email;
+import org.app.model.entity.Person;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -22,30 +27,24 @@ public class InboxOverView extends VerticalLayout {
 	private I18n i18n;
 	private Grid<Email> grid;
 	private ListDataProvider<Email> dataProvider;
-	private Set<Email> selectedEntries;
+	private CheckingEmails checkingEmails;
 
 	public InboxOverView(EmailService service) {
 		i18n = new I18n();
 		setMargin(new MarginInfo(false, true, false, false));
 		setSizeFull();
-		
-		final List<Email> list = service.getEmailDAO().findAll();
-		selectedEntries = new HashSet<>();
-		dataProvider = DataProvider.ofCollection(list);
-		dataProvider.setSortOrder(Email::getId, SortDirection.ASCENDING);
+		checkingEmails = new CheckingEmails();
+		checkingEmails.readEmails(service);
+
+		List<Email> list = service.getEmailDAO().findAll();
+		DataProvider<Email, ?> dataProvider = DataProvider.ofCollection(list);
 		
 		grid = new Grid<Email>();
 		grid.setSizeFull();
 		grid.setWidth("100%");
-		
-		grid.setSelectionMode(SelectionMode.MULTI);
-		grid.addSelectionListener(event -> {
-			selectedEntries = event.getAllSelectedItems();
-		});
-
 		grid.setDataProvider(dataProvider);
-		grid.addColumn(Email::getHeader).setCaption(i18n.EMAIL_HEADER).setId(i18n.EMAIL_HEADER);
-		
+		grid.addColumn(Email::getFrom).setCaption("From");
+		grid.addColumn(Email::getSubject).setCaption("Subject");
 		addComponent(grid);
 	}
 

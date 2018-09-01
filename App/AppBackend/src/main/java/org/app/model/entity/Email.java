@@ -25,81 +25,34 @@ public class Email extends Superclass implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String QUERY_GET_ALL = "Email.GetAll";
 
-	@NotNull
-	private String euuid;
+	private String from;
+	
+	private String subject;
+	
+	private String content;
 
-	@NotNull
-	private String epuuid;
-
-	private Timestamp createTime;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EMAIL_FOLDER_ID")
-	private EmailFolder emailFolder;
-
-	@NotNull
-	private String header;
-
-	@NotNull
-	private String body;
-
-	@NotNull
-	private String email;
-
-	public String getEuuid() {
-		return euuid;
+	public String getFrom() {
+		return from;
 	}
 
-	public void setEuuid(String euuid) {
-		this.euuid = euuid;
+	public void setFrom(String from) {
+		this.from = from;
 	}
 
-	public String getEpuuid() {
-		return epuuid;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setEpuuid(String epuuid) {
-		this.epuuid = epuuid;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
-	public Timestamp getCreateTime() {
-		return createTime;
+	public String getContent() {
+		return content;
 	}
 
-	public void setCreateAT(Timestamp createTime) {
-		this.createTime = createTime;
-	}
-
-	public EmailFolder getEmailFolder() {
-		return emailFolder;
-	}
-
-	public void setEmailFolder(EmailFolder emailFolder) {
-		this.emailFolder = emailFolder;
-	}
-
-	public String getHeader() {
-		return header;
-	}
-
-	public void setHeader(String header) {
-		this.header = header;
-	}
-
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }
