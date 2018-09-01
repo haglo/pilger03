@@ -1,8 +1,11 @@
 package org.app.view.settings;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -76,6 +79,7 @@ public class SettingsView extends HorizontalLayout implements View {
 		saveButton.addClickListener(event -> {
 			mySettings.setDefaultWindowWidth(txfWindowWidth.getValue());
 			mySettings = settingsService.getSettingsDAO().update(mySettings);
+
 		});
 
 		content.addComponent(txfWindowWidth);

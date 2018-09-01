@@ -3,6 +3,7 @@ package org.app.controler;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -21,7 +22,7 @@ public class SettingsService implements Serializable {
 
 	@EJB
 	private SettingsDAO settingsDAO;
-
+	
 	private boolean isEditing = false;
 
 	public boolean getEditing() {
@@ -47,6 +48,10 @@ public class SettingsService implements Serializable {
 			mySettings = entry;
 		}
 		return mySettings.getDefaultWindowWidth();
+	}
+
+	public String getUploadPath() {
+		return "C:/dev/upload";
 	}
 
 }

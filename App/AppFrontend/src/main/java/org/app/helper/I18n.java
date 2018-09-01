@@ -94,12 +94,20 @@ public final class I18n {
 	public String EMAIL_LOST = i18m.getMessage("email.lost");
 	public String EMAIL_HEADER = i18m.getMessage("email.header");
 	public String EMAIL_BODY = i18m.getMessage("email.body");
+	public String EMAIL_TO = i18m.getMessage("email.to");
+	public String EMAIL_BC = i18m.getMessage("email.cc");
+	public String EMAIL_CC = i18m.getMessage("email.bc");
+	public String EMAIL_SUBJECT = i18m.getMessage("email.subject");
 	public String EMAIL_CALL = i18m.getMessage("email.call");
 	public String EMAIL_WRITE = i18m.getMessage("email.write");
 	public String EMAIL_SEND = i18m.getMessage("email.send");
 	public String EMAIL_ANSWER = i18m.getMessage("email.answer");
 	public String EMAIL_FORWARD = i18m.getMessage("email.forward");
 	public String EMAIL_SIGNATURE = i18m.getMessage("email.signature");
+	public String EMAIL_ATTACHMENT = i18m.getMessage("email.attachment");
+	public String EMAIL_NEW = i18m.getMessage("email.new");
+	public String EMAIL_SEND_SUCCESS = i18m.getMessage("email.sendSuccess");
+	public String EMAIL_SEND_ERROR = i18m.getMessage("email.sendError");
 	
 
 	public String SETTINGS_WINDOW_WIDTH = i18m.getMessage("settings.windowwidth");
