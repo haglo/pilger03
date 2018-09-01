@@ -1,5 +1,7 @@
 package org.app.controler.email;
 
+import java.util.Set;
+
 import javax.activation.FileDataSource;
 
 public class EmailToSend {
@@ -10,7 +12,7 @@ public class EmailToSend {
 	private String subject;
 	private String text;
 	private String textHTML;
-	private FileDataSource dataSource;
+	private Set<FileDataSource> attachments;
 	private boolean withAttachment;
 
 	public String getSendTo() {
@@ -61,29 +63,22 @@ public class EmailToSend {
 		this.textHTML = textHTML;
 	}
 
-	public FileDataSource getDataSource() {
-		return dataSource;
+	public void setWithAttachment(boolean withAttachment) {
+		this.withAttachment = withAttachment;
 	}
 
-	public void setDataSource(String filename) {
-		FileDataSource tmp = new FileDataSource(filename);
-		this.dataSource = tmp;
-	}
 
 	public boolean isWithAttachment() {
 		return withAttachment;
 	}
 
-	public void setWithAttachment(boolean withAttachment) {
-		this.withAttachment = withAttachment;
+	public Set<FileDataSource> getAttachments() {
+		return attachments;
 	}
 
-//	private Set<String> parseEntries(String entry) {
-//		Set<String> tmp = new HashSet<>();
-//		String delims = "[,]";
-//		String[] tokens = entry.split(delims);
-//		Arrays.stream(tokens).map(String::trim).toArray(unused -> tokens);
-//		Collections.addAll(tmp, tokens);
-//		return tmp;
-//	}
+	public void setAttachments(Set<FileDataSource> attachments) {
+		this.attachments = attachments;
+	}
+
+
 }

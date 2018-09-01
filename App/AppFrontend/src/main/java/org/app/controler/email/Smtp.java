@@ -2,6 +2,7 @@ package org.app.controler.email;
 
 import java.util.Properties;
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -72,11 +73,13 @@ public class Smtp {
 
 			// With Attachment
 			if (pemail.isWithAttachment()) {
-				messageBodyPart = new MimeBodyPart();
-				messageBodyPart.setDataHandler(new DataHandler(pemail.getDataSource()));
-				messageBodyPart.setFileName(pemail.getDataSource().getName());
-				messageBodyPart.setHeader("Content-ID", "<image>");
-				multipart.addBodyPart(messageBodyPart);
+				for (FileDataSource tmp : pemail.getAttachments()) {
+					messageBodyPart = new MimeBodyPart();
+					messageBodyPart.setDataHandler(new DataHandler(tmp));
+					messageBodyPart.setFileName(tmp.getName());
+					messageBodyPart.setHeader("Content-ID", "<image>");
+					multipart.addBodyPart(messageBodyPart);
+				}
 			}
 
 			message.setContent(multipart);

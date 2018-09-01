@@ -1,5 +1,10 @@
 package org.app.view.email.send;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.activation.FileDataSource;
+
 import org.app.controler.email.EmailToSend;
 import org.app.controler.email.Smtp;
 import org.app.helper.I18n;
@@ -22,13 +27,13 @@ public class SendView extends Window {
 	private VerticalLayout mainContent;
 	private Smtp smtp;
 	private EmailToSend email;
-	private AppUpload uploadExample;
+	private EmailUpload uploadExample;
 
 	public SendView() {
 		i18n = new I18n();
 		smtp = new Smtp();
 		email = new EmailToSend();
-		uploadExample = new AppUpload();
+		uploadExample = new EmailUpload();
 		uploadExample.init("basic");
 
 		subContent = new VerticalLayout();
@@ -49,7 +54,16 @@ public class SendView extends Window {
 			email.setSendToBC("hans-georg.gloeckler@uni-ulm.de, hans-georg.gloeckler@gimtex.de");
 			email.setSubject("Test-Email von Pilgerapp");
 			email.setTextHTML("<b>Hallo Welt with HTML bold<b>");
-			email.setDataSource("C:/dev/upload/Image01.png");
+			
+			Set<FileDataSource> tmp = new HashSet<FileDataSource>();
+			tmp.add(new FileDataSource("C:/dev/upload/Image01.png"));
+			tmp.add(new FileDataSource("C:/dev/upload/Geld01.xlsx"));
+			email.setAttachments(tmp);
+			
+//			email.addAttachment("C:/dev/upload/Image01.png");
+//			email.addAttachment("C:/dev/upload/Geld01.xlsx");
+
+			
 			email.setWithAttachment(true);
 			try {
 				smtp.send(email);

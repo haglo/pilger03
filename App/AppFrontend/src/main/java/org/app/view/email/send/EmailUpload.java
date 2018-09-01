@@ -29,7 +29,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class AppUpload extends CustomComponent {
+public class EmailUpload extends CustomComponent {
 	private static final long serialVersionUID = -4292553844521293140L;
 
 	private final String uploadPath = "C:/dev/upload/";
