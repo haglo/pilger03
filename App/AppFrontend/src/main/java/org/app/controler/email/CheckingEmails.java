@@ -15,14 +15,14 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.app.controler.EmailService;
-import org.app.model.entity.Email;
+import org.app.model.entity.Pmail;
 
 import java.util.*;
 import java.io.*;
 
 public class CheckingEmails {
 	
-	private Email email;
+	private Pmail pmail;
 	private Store store;
 
 	
@@ -56,10 +56,10 @@ public class CheckingEmails {
 			System.out.println("messages.length---" + messages.length);
 
 			for (int i = 0, n = messages.length; i < n; i++) {
-				email = new Email();
+				pmail = new Pmail();
 				Message message = messages[i];
-				email.setSubject(message.getSubject());
-				service.getEmailDAO().update(email);
+				pmail.setPsubject(message.getSubject());
+				service.getPmailDAO().update(pmail);
 			}
 
 			// close the store and folder objects

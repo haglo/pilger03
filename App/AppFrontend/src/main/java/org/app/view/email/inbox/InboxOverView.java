@@ -10,7 +10,7 @@ import javax.mail.MessagingException;
 import org.app.controler.EmailService;
 import org.app.controler.email.CheckingEmails;
 import org.app.helper.I18n;
-import org.app.model.entity.Email;
+import org.app.model.entity.Pmail;
 import org.app.model.entity.Person;
 
 import com.vaadin.data.provider.DataProvider;
@@ -25,8 +25,8 @@ import com.vaadin.ui.VerticalLayout;
 public class InboxOverView extends VerticalLayout {
 
 	private I18n i18n;
-	private Grid<Email> grid;
-	private ListDataProvider<Email> dataProvider;
+	private Grid<Pmail> grid;
+	private ListDataProvider<Pmail> dataProvider;
 	private CheckingEmails checkingEmails;
 
 	public InboxOverView(EmailService service) {
@@ -36,15 +36,15 @@ public class InboxOverView extends VerticalLayout {
 		checkingEmails = new CheckingEmails();
 		checkingEmails.readEmails(service);
 
-		List<Email> list = service.getEmailDAO().findAll();
-		DataProvider<Email, ?> dataProvider = DataProvider.ofCollection(list);
+		List<Pmail> list = service.getPmailDAO().findAll();
+		DataProvider<Pmail, ?> dataProvider = DataProvider.ofCollection(list);
 		
-		grid = new Grid<Email>();
+		grid = new Grid<Pmail>();
 		grid.setSizeFull();
 		grid.setWidth("100%");
 		grid.setDataProvider(dataProvider);
-		grid.addColumn(Email::getFrom).setCaption("From");
-		grid.addColumn(Email::getSubject).setCaption("Subject");
+		grid.addColumn(Pmail::getPfrom).setCaption("From");
+		grid.addColumn(Pmail::getPsubject).setCaption("Subject");
 		addComponent(grid);
 	}
 

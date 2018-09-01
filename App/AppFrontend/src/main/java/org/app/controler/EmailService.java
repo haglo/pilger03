@@ -7,7 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 
-import org.app.model.dao.EmailDAO;
+import org.app.model.dao.PmailDAO;
 import org.app.model.dao.PersonDAO;
 import org.app.model.entity.Address;
 import org.app.model.entity.Person;
@@ -24,7 +24,7 @@ public class EmailService implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private EmailDAO emailDAO;
+	private PmailDAO pmailDAO;
 	
 	private boolean isEditing = false;
 
@@ -41,8 +41,8 @@ public class EmailService implements Serializable {
 	}
 
 	
-	public EmailDAO getEmailDAO() {
-		return emailDAO;
+	public PmailDAO getPmailDAO() {
+		return pmailDAO;
 	}
 
 }

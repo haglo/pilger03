@@ -19,40 +19,42 @@ import javax.validation.constraints.Size;
 
 @Entity
 @SuppressWarnings("all")
-@NamedQuery(name = Email.QUERY_GET_ALL, query = "SELECT c FROM Email c")
-public class Email extends Superclass implements Serializable {
+@NamedQuery(name = Pmail.QUERY_GET_ALL, query = "SELECT c FROM Pmail c")
+public class Pmail extends Superclass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public static final String QUERY_GET_ALL = "Email.GetAll";
+	public static final String QUERY_GET_ALL = "Pmail.GetAll";
 
-	private String from;
+	private String pfrom;
 	
-	private String subject;
+	private String psubject;
 	
-	private String content;
+	private String pcontent;
 
-	public String getFrom() {
-		return from;
+	public String getPfrom() {
+		return pfrom;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setPfrom(String pfrom) {
+		this.pfrom = pfrom;
 	}
 
-	public String getSubject() {
-		return subject;
+	public String getPsubject() {
+		return psubject;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setPsubject(String psubject) {
+		this.psubject = psubject;
 	}
 
-	public String getContent() {
-		return content;
+	public String getPcontent() {
+		return pcontent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setPcontent(String pcontent) {
+		this.pcontent = pcontent;
 	}
+
+
 
 }
