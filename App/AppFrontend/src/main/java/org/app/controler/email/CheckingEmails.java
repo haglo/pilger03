@@ -1,24 +1,17 @@
 package org.app.controler.email;
 
 import java.util.Properties;
-import java.util.TreeSet;
 
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 
-import javax.mail.*;
-import javax.mail.internet.*;
-
 import org.app.controler.EmailService;
 import org.app.model.entity.Pmail;
-
-import java.util.*;
-import java.io.*;
+import org.app.helper.I18n;
 
 public class CheckingEmails {
 	
@@ -27,6 +20,7 @@ public class CheckingEmails {
 
 	
 	public void readEmails(EmailService service) {
+
 		try {
 			Properties properties = new Properties();
 
@@ -55,11 +49,14 @@ public class CheckingEmails {
 			Message[] messages = emailFolder.getMessages();
 			System.out.println("messages.length---" + messages.length);
 
+			
 			for (int i = 0, n = messages.length; i < n; i++) {
 				pmail = new Pmail();
 				Message message = messages[i];
-				pmail.setPsubject(message.getSubject());
-				service.getPmailDAO().update(pmail);
+				pmail.setPsubject(I18n.encodeToBase64(message.getSubject()));
+				pmail.setPfrom(I18n.encodeToBase64(message.getFrom()[0].toString()));
+				pmail.setPcontent(I18n.encodeToBase64(message.getContent().toString()));
+				service.getPmailDAO().create(pmail);
 			}
 
 			// close the store and folder objects

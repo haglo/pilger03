@@ -6,11 +6,8 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.app.model.dao.ElytronRoleDAO;
-import org.app.model.dao.ElytronUserDAO;
 import org.app.model.entity.ElytronRole;
-import org.app.model.entity.ElytronUser;
 
 @Stateless
 @Remote(ElytronRoleDAO.class)
@@ -23,11 +20,10 @@ public class ElytronRoleBean implements ElytronRoleDAO {
 		return em.find(ElytronRole.class, id);
 	}
 
-
 	@Override
 	public ElytronRole findByName(String erole) {
-		return em.createNamedQuery(ElytronRole.QUERY_FIND_BY_ROLENAME, ElytronRole.class).setParameter("rolename", erole)
-				.getSingleResult();
+		return em.createNamedQuery(ElytronRole.QUERY_FIND_BY_ROLENAME, ElytronRole.class)
+				.setParameter("rolename", erole).getSingleResult();
 	}
 
 	public List<ElytronRole> findAll() {

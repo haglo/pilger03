@@ -37,7 +37,7 @@ public class InboxView extends VerticalLayout implements View {
 		mainContent.setSizeFull();
 		
 		inboxOverView = new InboxOverView(service);
-		inboxDetailView = new InboxDetailView();
+		inboxDetailView = new InboxDetailView("");
 		
 		mainContent.setFirstComponent(inboxOverView);
 		mainContent.setSecondComponent(inboxDetailView);

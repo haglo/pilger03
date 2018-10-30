@@ -1,5 +1,7 @@
 package org.app.helper;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Locale;
 import org.app.model.entity.enums.DefaultLanguage;
 import org.app.model.entity.enums.DefaultTheme;
@@ -20,7 +22,7 @@ public final class I18n {
 	public static final String SETTINGS_VIEW = "Settings";
 	public static final String EMAIL_VIEW = "Email";
 	public static final String INBOX_VIEW = "Inbox";
-	
+
 	public static final String THEME = "Theme";
 	public static final String LOCALE = "Locale";
 	public static final String ROLE_SYSTEM = "System";
@@ -54,7 +56,7 @@ public final class I18n {
 	public String BASIC_TYPE = i18m.getMessage("basic.type");
 	public String BASIC_DELETE = i18m.getMessage("basic.delete");
 	public String BASIC_PRINT = i18m.getMessage("basic.print");
-	
+
 	public String AUTH_LOGIN = i18m.getMessage("auth.login");
 	public String AUTH_REMEMBER_ME = i18m.getMessage("auth.rememberme");
 
@@ -80,13 +82,13 @@ public final class I18n {
 	public String TITLE_WINDOW_NEW_CAPTION = i18m.getMessage("title.windownewcaption");
 	public String TITLE_VALUE = i18m.getMessage("title.value");
 	public String TITLE_AUDIT = i18m.getMessage("title.audit");
-	
+
 	public String ACCOUNT_WINDOW_DETAIL_CAPTION = i18m.getMessage("account.windowdetailcaption");
 	public String ACCOUNT_WINDOW_NEW_CAPTION = i18m.getMessage("account.windownewcaption");
 	public String ACCOUNT_USERNAME = i18m.getMessage("account.username");
 	public String ACCOUNT_PASSWORD = i18m.getMessage("account.password");
 	public String ACCOUNT_GROUP = i18m.getMessage("account.group");
-	
+
 	public String EMAIL_INBOX = i18m.getMessage("email.inbox");
 	public String EMAIL_OUTBOX = i18m.getMessage("email.outbox");
 	public String EMAIL_TRASH = i18m.getMessage("email.trash");
@@ -108,7 +110,6 @@ public final class I18n {
 	public String EMAIL_NEW = i18m.getMessage("email.new");
 	public String EMAIL_SEND_SUCCESS = i18m.getMessage("email.sendSuccess");
 	public String EMAIL_SEND_ERROR = i18m.getMessage("email.sendError");
-	
 
 	public String SETTINGS_WINDOW_WIDTH = i18m.getMessage("settings.windowwidth");
 
@@ -164,6 +165,29 @@ public final class I18n {
 		default:
 			return "appui";
 		}
+	}
+
+	public static String encodeToBase64(String token) {
+		String converted;
+		try {
+			converted = Base64.getEncoder().encodeToString(token.getBytes("utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return converted;
+	}
+
+	public static String decodeFromBase64(String token) {
+		String decoded;
+		try {
+			byte[] asBytes = Base64.getDecoder().decode(token);
+			decoded = new String(asBytes, "utf-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return decoded;
 	}
 
 }
